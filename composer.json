@@ -1,0 +1,15 @@
+{
+    "name": "bakirov/protokit",
+    "autoload": {
+        "psr-4": {
+            "Bakirov\\Protokit\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Umarjon Bakirov",
+            "email": "umarjonbakirov2@gmail.com"
+        }
+    ],
+    "require": {}
+}
