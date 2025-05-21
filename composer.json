@@ -1,5 +1,6 @@
 {
     "name": "bakirov/protokit",
+    "description": "this is a protokit package",
     "autoload": {
         "psr-4": {
             "Bakirov\\Protokit\\": "src/"
@@ -11,5 +12,18 @@
             "email": "umarjonbakirov2@gmail.com"
         }
     ],
-    "require": {}
+
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Bakirov\\Protokit\\ProtokitServiceProvider"
+            ]
+        }
+    },
+    
+    "require": {
+        "php": ">=8.2",
+        "illuminate/console": "^12.15"
+    }
+
 }
