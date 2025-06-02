@@ -1,9 +1,9 @@
 <?php
 
-namespace Modules\{{NAME_MoNAME_MODELdel}}\Models;
+namespace Modules\{{NAME_MODEL}}\Models;
 
 
-use Modules\{{NAME_MoNAME_MODELdel}}\Services\{{NAME_MODEL}}Service;
+use Modules\{{NAME_MODEL}}\Services\{{NAME_MODEL}}Service;
 
 class {{NAME_MODEL}} extends Controller
 {

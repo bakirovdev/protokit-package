@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\{{NAME_MoNAME_MODELdel}}\Services;
+namespace Modules\{{NAME_MODEL}}\Services;
 
 use App\Protokit\Model\Model;
 
