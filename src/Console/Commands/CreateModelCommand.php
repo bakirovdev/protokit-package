@@ -51,11 +51,6 @@ class CreateModelCommand extends Command
         }
     }
 
-    public function getStub(string $stubName)
-    {
-        return file_get_contents(__DIR__ . "/stubs/$stubName.stub");
-    }
-
     public function addingAutoload(): void
     {
         $path = base_path('composer.json');
@@ -83,6 +78,11 @@ class CreateModelCommand extends Command
         file_put_contents($path, json_encode($json, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
 
         $this->warn("Run `composer dump-autoload` to apply changes.");
+    }
+
+    public function getStub(string $stubName)
+    {
+        return file_get_contents(__DIR__ . "/Stubs/$stubName.stub");
     }
 
     private function checkPath($name): void
