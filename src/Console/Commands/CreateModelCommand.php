@@ -84,4 +84,17 @@ class CreateModelCommand extends Command
 
         $this->warn("Run `composer dump-autoload` to apply changes.");
     }
+
+    private function checkPath(): void
+    {
+        if (!file_exists(base_path("modules"))) {
+            mkdir(base_path("modules"));
+            $this->info("✅ modules folder is created.");
+        }
+
+        if (!file_exists(base_path("modules/$name"))) {
+            mkdir(base_path("modules/$name"));
+            $this->info("✅ modules folder is created.");
+        }
+    }
 }
