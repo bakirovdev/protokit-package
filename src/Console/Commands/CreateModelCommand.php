@@ -7,7 +7,7 @@ use Illuminate\Console\Command;
 
 class CreateModelCommand extends Command
 {
-    protected $signature = 'protokit:create-module {name}  {--models}'; 
+    protected $signature = 'protokit:create-module {name}  {--models=}'; 
     protected $description = 'This will create new Module by the name and create models';
     
     public function handle(): void
