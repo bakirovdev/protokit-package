@@ -82,7 +82,7 @@ class CreateModelCommand extends Command
 
     public function getStub(string $stubName)
     {
-        return file_get_contents(__DIR__ . "/Stubs/$stubName.stub");
+        return file_get_contents(__DIR__ . "/../Stubs/$stubName.stub");
     }
 
     private function checkPath($name): void
