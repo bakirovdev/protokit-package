@@ -1,0 +1,15 @@
+<?php
+
+namespace Modules\{{NAME_MoNAME_MODELdel}}\Resources;
+
+use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\JsonResource;
+
+
+class {{NAME_MODEL}}Resource extends JsonResource
+{
+    public function toArray(Request $request): array
+    {
+        return parent::toArray($request);
+    }
+}

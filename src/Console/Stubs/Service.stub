@@ -1,0 +1,16 @@
+<?php
+
+namespace Modules\{{NAME_MoNAME_MODELdel}}\Services;
+
+use App\Protokit\Model\Model;
+
+class {{NAME_MODEL}}Service
+{
+    public function __construct(protected Model $model)
+    {}
+
+    public function getService(): {{NAME_MODEL}}Service
+    {
+        return new {{NAME_MODEL}}Service($this);
+    }
+}
