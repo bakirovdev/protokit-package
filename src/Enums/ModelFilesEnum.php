@@ -5,7 +5,7 @@ namespace Bakirov\Protokit\Enums;
 enum ModelFilesEnum: string
 {
     case Model = 'Model';
-    case MRT = 'ModelRelationTrait';
+    case MRT = 'ModelRelationsTrait';
     case MST = 'ModelSafelyTrait';
 
     public static function values(): array
