@@ -27,7 +27,7 @@ class ProtokitInitCommand extends Command
     private function creteModel(): void
     {
         foreach (ModelFilesEnum::values() as $file) {            
-            $classTemplate = $this->getStub("$file");
+            $classTemplate = $this->getStub("Model/$file");
 
             $path  = "Model";
             $this->checkPath($path);
@@ -92,7 +92,7 @@ class ProtokitInitCommand extends Command
 
     public function getStub(string $stubName)
     {
-        return file_get_contents(__DIR__ . "/../Stubs/Module/$stubName.stub");
+        return file_get_contents(__DIR__ . "/../Stubs/$stubName.stub");
     }
 
     private function checkPath($path = null): void
