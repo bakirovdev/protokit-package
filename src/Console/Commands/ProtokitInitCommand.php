@@ -59,13 +59,13 @@ class ProtokitInitCommand extends Command
 
     private function createController(): void
     {
-        if (!$this->checkFileExists('ProtokitController')) {
-            $classTemplate = $this->getStub("ProtokitController");
-            file_put_contents(app_path("Protokit/ProtokitController.php"), $classTemplate);
-            $this->info("✅ APP/Protokit/ProtokitController.php is created!");
+        if (!$this->checkFileExists('Controller')) {
+            $classTemplate = $this->getStub("Controller");
+            file_put_contents(app_path("Protokit/Controller.php"), $classTemplate);
+            $this->info("✅ APP/Protokit/Controller.php is created!");
             return;
         }
-        $this->info("✅ APP/Protokit/ProtokitController.php is already exists!");
+        $this->info("✅ APP/Protokit/Controller.php is already exists!");
     }
     private function createApplication(): void
     {

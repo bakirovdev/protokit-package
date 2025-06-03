@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
-class ProtokitController extends Controller
+class Controller extends Controller
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
     
