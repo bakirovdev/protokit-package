@@ -28,15 +28,20 @@ class CreateModelCommand extends Command
     private function createModuleClasses(string $name, array $models): void
     {
         if ($models) {
-            foreach ($models as $value) {
+            foreach ($models as $model) {
                 foreach (ModuleClassEnum::values() as $class) {
                     if ($class !== ModuleClassEnum::Model->value)
-                        $name .= $name.$value;
+                        $model .= $model.$class;
+
                     $classTemplate = $this->getStub($class);
-                    $classTemplate = str_replace("{{NAME_MODEL}}", "$models", $classTemplate);
-                    file_put_contents(base_path("modules/{$models}/{$class}s/{$models}.php"), $classTemplate);
-                    $this->info("✅ Modules/{$models}/{$class}s/{$models}.php is created!");
-                }        
+                    $classTemplate = str_replace("{{NAME_MODEL}}", "$model", $classTemplate);
+
+                    $path  = "modules/{$name}/{$class}s";
+                    $this->checkEachFile($path);
+
+                    file_put_contents(base_path("modules/{$name}/{$class}s/{$model}.php"), $classTemplate);
+                    $this->info("✅ Modules/{$name}/{$class}s/{$model}.php is created!");
+                }
             }
             return;
         }
@@ -95,6 +100,13 @@ class CreateModelCommand extends Command
         if (!file_exists(base_path("modules/$name"))) {
             mkdir(base_path("modules/$name"));
             $this->info("✅ modules folder is created.");
+        }
+    }
+
+    private function checkEachFile(string $path)
+    {
+        if (!file_exists(base_path("$path"))) {
+            mkdir(base_path("$path"));
         }
     }
 }
