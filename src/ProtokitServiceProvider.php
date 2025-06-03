@@ -4,6 +4,7 @@ namespace Bakirov\Protokit;
 
 use Illuminate\Support\ServiceProvider;
 use Bakirov\Protokit\Console\Commands\CreateModelCommand;
+use Bakirov\Protokit\Console\Commands\ProtokitInitCommand;
 
 class ProtokitServiceProvider extends ServiceProvider
 {
@@ -17,6 +18,7 @@ class ProtokitServiceProvider extends ServiceProvider
         if ($this->app->runningInConsole()) {
             $this->commands([
                 CreateModelCommand::class,
+                ProtokitInitCommand::class,
             ]);
         }
     }
