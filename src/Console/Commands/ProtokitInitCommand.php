@@ -18,8 +18,11 @@ class ProtokitInitCommand extends Command
         $this->createSearch();
         $this->createService();
         $this->createController();
-        // $this->createApplication();
-
+        
+        $addingRouteProvider = $this->ask("Do you want add RouteServiceProvider (Y/n)?", 'y');
+        if ($addingRouteProvider == 'y' ||  $addingRouteProvider == 'yes' || $addingRouteProvider == 'Y') {
+            $this->createRouteServiceProvider();    
+        }
         $this->info("Protokit initals done successfully.");
     }
 
@@ -71,6 +74,7 @@ class ProtokitInitCommand extends Command
         }
         $this->info("☑️ APP/Protokit/Controller.php is already exists!");
     }
+
     private function createApplication(): void
     {
         if (!$this->checkFileExists('Application')) {
@@ -91,6 +95,42 @@ class ProtokitInitCommand extends Command
             return;
         }
         $this->info("☑️ APP/Protokit/Service.php is already exists!");
+    }
+
+    private function createRouteServiceProvider(): void
+    {
+        if (file_exists(app_path('Providers/RouteServiceProvider.php'))) {
+            $this->info("☑️ APP/Protokit/Service.php is already exists!");
+            return;
+        };
+
+        $classTemplate = $this->getStub("Provider/RouteServiceProvider");
+        file_put_contents(app_path("Providers/RouteServiceProvider.php"), $classTemplate);
+        $this->info("✅ APP/Protokit/Service.php is created!");
+        
+        $providersFile = base_path('bootstrap/providers.php');
+
+        if (!file_exists($providersFile)){
+            $this->error("bootstrap/providers.php not found.");
+            return;
+        }
+        $fileContent = file_get_contents($providersFile);
+
+         if (str_contains($fileContent, 'App\Providers\RouteServiceProvider' . '::class')) {
+            $this->info("Provider already registered.");
+            return;
+        }
+        
+        $pattern = '/(\[.*?)(\];)/s';
+
+        $updated = preg_replace_callback($pattern, function ($matches) {
+            // Ensure there is a trailing comma if needed
+            $existing = rtrim($matches[1]);
+            $newEntry = "     App\Providers\RouteServiceProvider::class,\n";
+            return $existing . "\n" . $newEntry . $matches[2];
+        }, $fileContent);
+        file_put_contents($providersFile, $updated);
+        $this->info("RouteServiceProvider registered successfully.");
     }
 
     public function getStub(string $stubName)
