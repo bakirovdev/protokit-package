@@ -18,6 +18,9 @@ class ProtokitInitCommand extends Command
         $this->createSearch();
         $this->createService();
         $this->createController();
+        $this->createRouting();
+        $this->createApplication();
+        $this->createAppFile();
         
         $addingRouteProvider = $this->ask("Do you want add RouteServiceProvider (Y/n)?", 'y');
         if ($addingRouteProvider == 'y' ||  $addingRouteProvider == 'yes' || $addingRouteProvider == 'Y') {
@@ -86,15 +89,44 @@ class ProtokitInitCommand extends Command
         $this->info("☑️ APP/Protokit/Application.php is already exists!");
     }
 
-    private function createService(): void
+    private function createAppFile(): void
     {
-        if (!$this->checkFileExists('Service')) {
-            $classTemplate = $this->getStub("Service");
-            file_put_contents(app_path("Protokit/Service.php"), $classTemplate);
-            $this->info("✅ APP/Protokit/Service.php is created!");
+        if (file_exists(base_path('bootstrap/app.php'))) {
+            $classTemplate = $this->getStub("app");
+            file_put_contents(base_path('bootstrap/app.php'), $classTemplate);
+            $this->info("✅ bootstrap/app.php is updated!");
             return;
         }
-        $this->info("☑️ APP/Protokit/Service.php is already exists!");
+    }
+
+    private function createRouting(): void
+    {
+        if (!$this->checkFileExists('Application')) {
+            $classTemplate = $this->getStub("Application");
+            file_put_contents(app_path("Protokit/Application.php"), $classTemplate);
+            $this->info("✅ APP/Protokit/Application.php is created!");
+            return;
+        }
+        $this->info("☑️ APP/Protokit/Application.php is already exists!");
+    }
+
+    private function createService(): void
+    {
+        if ($this->checkFileExists('Routing/Router')) {
+            $this->info("☑️ APP/Protokit/Service.php is already exists!");
+        }else{
+            $classTemplate = $this->getStub("Routing/Router");
+            file_put_contents(app_path("Protokit/Routing/Router.php"), $classTemplate);
+            $this->info("✅ APP/Protokit/Service.php is created!");
+        }
+
+        if ($this->checkFileExists('Routing/ResourceRegistrar')) {
+            $this->info("☑️ APP/Protokit/Routing/ResourceRegistrar.php is already exists!");
+        }else{
+            $classTemplate = $this->getStub("Routing/ResourceRegistrar");
+            file_put_contents(app_path("Protokit/Routing/ResourceRegistrar.php"), $classTemplate);
+            $this->info("✅ APP/Protokit/Routing/ResourceRegistrar.php is created!");
+        }
     }
 
     private function createRouteServiceProvider(): void
