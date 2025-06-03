@@ -19,7 +19,6 @@ class ProtokitInitCommand extends Command
         $this->createService();
         $this->createController();
         // $this->createApplication();
-        $this->addingAutoload();
 
         $this->info("Protokit initals done successfully.");
     }
