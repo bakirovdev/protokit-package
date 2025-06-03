@@ -31,7 +31,7 @@ class CreateModelCommand extends Command
             foreach ($models as $model) {
                 foreach (ModuleClassEnum::values() as $class) {
                     if ($class !== ModuleClassEnum::Model->value)
-                        $model .= $model.$class;
+                        $model .= $class;
 
                     $classTemplate = $this->getStub($class);
                     $classTemplate = str_replace("{{NAME_MODULE}}", "$name", $classTemplate);
