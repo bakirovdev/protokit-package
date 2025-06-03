@@ -99,19 +99,21 @@ class ProtokitInitCommand extends Command
         }
     }
 
-    private function createRouting(): void
-    {
-        if (!$this->checkFileExists('Application')) {
-            $classTemplate = $this->getStub("Application");
-            file_put_contents(app_path("Protokit/Application.php"), $classTemplate);
-            $this->info("✅ APP/Protokit/Application.php is created!");
-            return;
-        }
-        $this->info("☑️ APP/Protokit/Application.php is already exists!");
-    }
-
     private function createService(): void
     {
+        if (!$this->checkFileExists('Service')) {
+            $classTemplate = $this->getStub("Service");
+            file_put_contents(app_path("Protokit/Service.php"), $classTemplate);
+            $this->info("✅ APP/Protokit/Service.php is created!");
+            return;
+        }
+        $this->info("☑️ APP/Protokit/Service.php is already exists!");
+    }
+
+    private function createRouting(): void
+    {
+        $this->checkPath('Routing');
+
         if ($this->checkFileExists('Routing/Router')) {
             $this->info("☑️ APP/Protokit/Service.php is already exists!");
         }else{
