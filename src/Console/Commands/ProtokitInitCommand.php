@@ -110,6 +110,6 @@ class ProtokitInitCommand extends Command
 
     private function checkFileExists($path): bool
     {
-        return file_exists(app_path('Protokit/'.$path)) ? true : false;
+        return file_exists(app_path('Protokit/'.$path.'.php')) ? true : false;
     }
 }
