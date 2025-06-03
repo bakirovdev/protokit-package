@@ -120,13 +120,13 @@ class ProtokitInitCommand extends Command
             $this->info("Provider already registered.");
             return;
         }
-        
+
         $pattern = '/(\[.*?)(\];)/s';
 
         $updated = preg_replace_callback($pattern, function ($matches) {
             // Ensure there is a trailing comma if needed
             $existing = rtrim($matches[1]);
-            $newEntry = "     App\Providers\RouteServiceProvider::class,\n";
+            $newEntry = "    App\Providers\RouteServiceProvider::class,\n";
             return $existing . "\n" . $newEntry . $matches[2];
         }, $fileContent);
         file_put_contents($providersFile, $updated);
