@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Base;
+namespace App\Protokit;
 
-use App\Routing\Router;
-use App\Routing\ResourceRegistrar;
+use App\Protokit\Routing\Router;
+use App\Protokit\Routing\ResourceRegistrar;
 use Illuminate\Foundation\Application as FoundationApplication;
 use Illuminate\Routing\ResourceRegistrar as LaravelResourceRegistrar;
 
