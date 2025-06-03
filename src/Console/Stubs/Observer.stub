@@ -1,8 +1,8 @@
 <?php
 
-namespace Modules\{{NAME_MODULE}}\Observers;
+namespace Modules\{{MODULE_NAME}}\Observers;
 
-class {{CLASS_NAME}}Observer
+class {{CLASS_NAME}}
 {
     
 }

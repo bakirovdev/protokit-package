@@ -30,30 +30,34 @@ class CreateModelCommand extends Command
         if ($models) {
             foreach ($models as $model) {
                 foreach (ModuleClassEnum::values() as $class) {
-                    if ($class !== ModuleClassEnum::Model->value)
-                        $model .= $class;
+                    $className = $model;
+                    if ($class !== ModuleClassEnum::Model->value)                        
+                        $className = $model.$class;
 
                     $classTemplate = $this->getStub($class);
-                    $classTemplate = str_replace("{{NAME_MODULE}}", "$name", $classTemplate);
-                    $classTemplate = str_replace("{{CLASS_NAME}}", "$model", $classTemplate);
+                    $classTemplate = str_replace("{{MODULE_NAME}}", "$name", $classTemplate);
+                    $classTemplate = str_replace("{{CLASS_NAME}}", "$className", $classTemplate);
 
                     $path  = "modules/{$name}/{$class}s";
                     $this->checkEachFile($path);
 
-                    file_put_contents(base_path("modules/{$name}/{$class}s/{$model}.php"), $classTemplate);
-                    $this->info("✅ Modules/{$name}/{$class}s/{$model}.php is created!");
+                    file_put_contents(base_path("modules/{$name}/{$class}s/{$className}.php"), $classTemplate);
+                    $this->info("✅ Modules/{$name}/{$class}s/{$className}.php is created!");
                 }
             }
             return;
         }
 
         foreach (ModuleClassEnum::values() as $class) {
+            $className = $name;
             if ($class !== ModuleClassEnum::Model->value)
-                $name .= $name.$class;
+                $className = $name.$class;
+            
             $classTemplate = $this->getStub($class);
-            $classTemplate = str_replace("{{NAME_MODEL}}", "$name", $classTemplate);
-            file_put_contents(base_path("modules/{$name}/{$class}s/{$name}.php"), $classTemplate);
-            $this->info("✅ Modules/{$name}/{$class}s/{$name}.php is created!");
+            $classTemplate = str_replace("{{MODULE_NAME}}", "$name", $classTemplate);
+            $classTemplate = str_replace("{{CLASS_NAME}}", "$className", $classTemplate);
+            file_put_contents(base_path("modules/{$name}/{$class}s/{$className}.php"), $classTemplate);
+            $this->info("✅ Modules/{$name}/{$class}s/{$className}.php is created!");
         }
     }
 
