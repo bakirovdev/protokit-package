@@ -1,14 +1,14 @@
 <?php
 
-namespace Modules\{{NAME_MODEL}}\Models;
+namespace Modules\{{NAME_MODULE}}\Models;
 
 
-use Modules\{{NAME_MODEL}}\Services\{{NAME_MODEL}}Service;
+use Modules\{{NAME_MODULE}}\Services\{{CLASS_NAME}}Service;
 
-class {{NAME_MODEL}} extends Controller
+class {{CLASS_NAME}} extends Controller
 {
-    public function getService(): {{NAME_MODEL}}Service
+    public function getService(): {{CLASS_NAME}}Service
     {
-        return new {{NAME_MODEL}}Service($this);
+        return new {{CLASS_NAME}}Service($this);
     }
 }

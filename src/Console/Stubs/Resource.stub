@@ -1,12 +1,12 @@
 <?php
 
-namespace Modules\{{NAME_MODEL}}\Resources;
+namespace Modules\{{NAME_MODULE}}\Resources;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 
-class {{NAME_MODEL}}Resource extends JsonResource
+class {{CLASS_NAME}} extends JsonResource
 {
     public function toArray(Request $request): array
     {

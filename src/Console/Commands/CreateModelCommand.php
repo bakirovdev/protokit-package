@@ -34,7 +34,8 @@ class CreateModelCommand extends Command
                         $model .= $model.$class;
 
                     $classTemplate = $this->getStub($class);
-                    $classTemplate = str_replace("{{NAME_MODEL}}", "$model", $classTemplate);
+                    $classTemplate = str_replace("{{NAME_MODULE}}", "$name", $classTemplate);
+                    $classTemplate = str_replace("{{NAME_CLASS}}", "$model", $classTemplate);
 
                     $path  = "modules/{$name}/{$class}s";
                     $this->checkEachFile($path);
