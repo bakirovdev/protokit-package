@@ -25,13 +25,17 @@ class ProtokitInitCommand extends Command
 
     private function creteModel(): void
     {
-        foreach (ModelFilesEnum::values() as $file) {            
+        foreach (ModelFilesEnum::values() as $file) {
             $classTemplate = $this->getStub("Model/$file");
 
-            $path  = "Model";
-            $this->checkPath($path);
-            file_put_contents(app_path("Protokit/Model/{$file}.php"), $classTemplate);
-            $this->info("✅ APP/Protokit/Model/{$file}.php is created!");
+            if(!$this->checkFileExists("Model/$file")){
+                $path  = "Model";
+                $this->checkPath($path);
+                file_put_contents(app_path("Protokit/Model/{$file}.php"), $classTemplate);
+                $this->info("✅ APP/Protokit/Model/{$file}.php is created!");
+            }
+
+            $this->info("☑️ APP/Protokit/Model/{$file}.php is already exists!");
         }
     }
 
@@ -43,7 +47,7 @@ class ProtokitInitCommand extends Command
             $this->info("✅ APP/Protokit/QueryBuilder.php is created!");
             return;
         }
-        $this->info("✅ APP/Protokit/QueryBuilder.php is already exists!");
+        $this->info("☑️ APP/Protokit/QueryBuilder.php is already exists!");
     }
 
     private function createSearch(): void
@@ -54,7 +58,7 @@ class ProtokitInitCommand extends Command
             $this->info("✅ APP/Protokit/Search.php is created!");
             return;
         }
-        $this->info("✅ APP/Protokit/Search.php is already exists!");
+        $this->info("☑️ APP/Protokit/Search.php is already exists!");
     }
 
     private function createController(): void
@@ -65,7 +69,7 @@ class ProtokitInitCommand extends Command
             $this->info("✅ APP/Protokit/Controller.php is created!");
             return;
         }
-        $this->info("✅ APP/Protokit/Controller.php is already exists!");
+        $this->info("☑️ APP/Protokit/Controller.php is already exists!");
     }
     private function createApplication(): void
     {
@@ -75,7 +79,7 @@ class ProtokitInitCommand extends Command
             $this->info("✅ APP/Protokit/Application.php is created!");
             return;
         }
-        $this->info("✅ APP/Protokit/Application.php is already exists!");
+        $this->info("☑️ APP/Protokit/Application.php is already exists!");
     }
 
     private function createService(): void
@@ -86,7 +90,7 @@ class ProtokitInitCommand extends Command
             $this->info("✅ APP/Protokit/Service.php is created!");
             return;
         }
-        $this->info("✅ APP/Protokit/Service.php is already exists!");
+        $this->info("☑️ APP/Protokit/Service.php is already exists!");
     }
 
     public function getStub(string $stubName)
