@@ -20,6 +20,7 @@ class ProtokitInitCommand extends Command
         $this->createController();
         $this->createRouting();
         $this->createExceptions();
+        $this->createKernels();
         $this->createApplication();
         $this->createAppFile();
         
@@ -141,6 +142,29 @@ class ProtokitInitCommand extends Command
             $classTemplate = $this->getStub("Exception/Handler");
             file_put_contents(app_path("Protokit/Exceptions/Handler.php"), $classTemplate);
             $this->info("✅ APP/Protokit/Exceptions/Handler.php is created!");
+        }
+    }
+
+    private function createKernels(): void
+    {
+        //http Kernel
+        $this->checkPath('Http');
+        if ($this->checkFileExists('Http/Kernel')) {
+            $this->info("☑️ APP/Http/Kernel.php is already exists!");
+        }else{
+            $classTemplate = $this->getStub("Kernel/HttpKernel");
+            file_put_contents(app_path("Http/Kernel.php"), $classTemplate);
+            $this->info("✅ APP/Http/Kernel.php.php is created!");
+        }
+
+        //console Kernel
+        $this->checkPath('Console');
+        if ($this->checkFileExists('Console/Kernel')) {
+            $this->info("☑️ APP/Console/Kernel.php is already exists!");
+        }else{
+            $classTemplate = $this->getStub("Kernel/ConsoleKernel");
+            file_put_contents(app_path("Console/Kernel.php"), $classTemplate);
+            $this->info("✅ APP/Console/Kernel.php.php is created!");
         }
     }
 
