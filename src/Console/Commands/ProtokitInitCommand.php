@@ -21,13 +21,15 @@ class ProtokitInitCommand extends Command
         $this->createRouting();
         $this->createExceptions();
         $this->createKernels();
-        $this->createApplication();
+        $this->createApplication();        
         $this->createAppFile();
-        
         $addingRouteProvider = $this->ask("Do you want add RouteServiceProvider (Y/n)?", 'y');
         if ($addingRouteProvider == 'y' ||  $addingRouteProvider == 'yes' || $addingRouteProvider == 'Y') {
             $this->createRouteServiceProvider();    
         }
+
+        $this->addingAutoload();
+
         $this->info("Protokit initals done successfully.");
     }
 
@@ -166,6 +168,35 @@ class ProtokitInitCommand extends Command
             file_put_contents(app_path("Console/Kernel.php"), $classTemplate);
             $this->info("✅ APP/Console/Kernel.php.php is created!");
         }
+    }
+
+    public function addingAutoload(): void
+    {
+        $path = base_path('composer.json');
+
+        if (!file_exists($path))
+            $this->error("composer.json not found.");
+        
+
+        $json = json_decode(file_get_contents($path), true);
+
+        if (!isset($json['autoload']['psr-4'])) {
+            $json['autoload']['psr-4'] = [];
+        }
+
+        if (!isset($json['autoload']['psr-4']['Moduels\\'])) {
+            $json['autoload']['psr-4']['Modules\\'] = 'modules/';            
+            $this->info("Added autoload: Modules\\ => modules/");
+        }
+
+        if (!isset($json['autoload']['psr-4']['Http\\'])) {
+            $json['autoload']['psr-4']['Http\\'] = 'http/';
+            $this->info("Added autoload: Http\\ => http/");
+        }
+
+        file_put_contents($path, json_encode($json, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
+
+        $this->warn("⚠️⚠️==========> Run `composer dump-autoload` to apply changes. <==========⚠️⚠️");
     }
 
     private function createRouteServiceProvider(): void

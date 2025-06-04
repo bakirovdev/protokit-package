@@ -19,8 +19,6 @@ class CreateModelCommand extends Command
 
         $this->checkPath($name);
         $this->createModuleClasses($name, $models);
-        $this->addingAutoload();
-
 
         $this->info("Model class '$name' created successfully.");
     }
@@ -59,35 +57,6 @@ class CreateModelCommand extends Command
             file_put_contents(base_path("modules/{$name}/{$class}s/{$className}.php"), $classTemplate);
             $this->info("✅ Modules/{$name}/{$class}s/{$className}.php is created!");
         }
-    }
-
-    public function addingAutoload(): void
-    {
-        $path = base_path('composer.json');
-
-        if (!file_exists($path))
-            $this->error("composer.json not found.");
-        
-
-        $json = json_decode(file_get_contents($path), true);
-
-        if (!isset($json['autoload']['psr-4'])) {
-            $json['autoload']['psr-4'] = [];
-        }
-
-        if (!isset($json['autoload']['psr-4']['Moduels\\'])) {
-            $json['autoload']['psr-4']['Moduels\\'] = 'modules/';            
-            $this->info("Added autoload: Moduels\\ => modules/");
-        }
-
-        if (!isset($json['autoload']['psr-4']['Http\\'])) {
-            $json['autoload']['psr-4']['Http\\'] = 'Http/';
-            $this->info("Added autoload: Http\\ => http/");
-        }
-
-        file_put_contents($path, json_encode($json, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
-
-        $this->warn("Run `composer dump-autoload` to apply changes.");
     }
 
     public function getStub(string $stubName)
