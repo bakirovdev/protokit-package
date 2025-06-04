@@ -19,6 +19,7 @@ class ProtokitInitCommand extends Command
         $this->createService();
         $this->createController();
         $this->createRouting();
+        $this->createExceptions();
         $this->createApplication();
         $this->createAppFile();
         
@@ -115,11 +116,11 @@ class ProtokitInitCommand extends Command
         $this->checkPath('Routing');
 
         if ($this->checkFileExists('Routing/Router')) {
-            $this->info("☑️ APP/Protokit/Service.php is already exists!");
+            $this->info("☑️ APP/Protokit/Routing/Router.php is already exists!");
         }else{
             $classTemplate = $this->getStub("Routing/Router");
             file_put_contents(app_path("Protokit/Routing/Router.php"), $classTemplate);
-            $this->info("✅ APP/Protokit/Service.php is created!");
+            $this->info("✅ APP/Protokit/Routing/Router.php is created!");
         }
 
         if ($this->checkFileExists('Routing/ResourceRegistrar')) {
@@ -128,6 +129,18 @@ class ProtokitInitCommand extends Command
             $classTemplate = $this->getStub("Routing/ResourceRegistrar");
             file_put_contents(app_path("Protokit/Routing/ResourceRegistrar.php"), $classTemplate);
             $this->info("✅ APP/Protokit/Routing/ResourceRegistrar.php is created!");
+        }
+    }
+
+    private function createExceptions(): void
+    {
+        $this->checkPath('Exceptions');
+        if ($this->checkFileExists('Exceptions/Handler')) {
+            $this->info("☑️ APP/Protokit/Exceptions/Handler.php is already exists!");
+        }else{
+            $classTemplate = $this->getStub("Exception/Handler");
+            file_put_contents(app_path("Protokit/Exceptions/Handler.php"), $classTemplate);
+            $this->info("✅ APP/Protokit/Exceptions/Handler.php is created!");
         }
     }
 
@@ -151,7 +164,7 @@ class ProtokitInitCommand extends Command
         $fileContent = file_get_contents($providersFile);
 
          if (str_contains($fileContent, 'App\Providers\RouteServiceProvider' . '::class')) {
-            $this->info("Provider already registered.");
+            $this->info("☑️ Provider already registered.");
             return;
         }
 
