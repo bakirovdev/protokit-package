@@ -23,7 +23,7 @@ class CreateModelCommand extends Command
         $this->info("Model class '$name' created successfully.");
     }
 
-    private function createModuleClasses(string $name, array $models): void
+    private function createModuleClasses(string $name, array|null $models = null): void
     {
         if ($models) {
             foreach ($models as $model) {
@@ -54,6 +54,10 @@ class CreateModelCommand extends Command
             $classTemplate = $this->getStub($class);
             $classTemplate = str_replace("{{MODULE_NAME}}", "$name", $classTemplate);
             $classTemplate = str_replace("{{CLASS_NAME}}", "$className", $classTemplate);
+            
+            $path  = "modules/{$name}/{$class}s";
+            $this->checkEachFile($path);
+
             file_put_contents(base_path("modules/{$name}/{$class}s/{$className}.php"), $classTemplate);
             $this->info("✅ Modules/{$name}/{$class}s/{$className}.php is created!");
         }
