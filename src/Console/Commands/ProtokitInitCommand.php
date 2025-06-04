@@ -252,6 +252,16 @@ class ProtokitInitCommand extends Command
             mkdir(app_path("Protokit"));
             $this->info("✅ Protokit folder is created.");
         }
+
+        if (!file_exists(base_path("modules"))) {
+            mkdir(base_path("modules"));
+            $this->info("✅ Modules folder is created.");
+        }
+
+        if (!file_exists(base_path("http"))) {
+            mkdir(base_path("http"));
+            $this->info("✅ Http folder is created.");
+        }
     }
 
     private function checkFileExists($path): bool
