@@ -150,7 +150,7 @@ class ProtokitInitCommand extends Command
     private function createKernels(): void
     {
         //http Kernel
-        $this->checkPath('Http');
+        $this->checkPath('../Http');
         if ($this->checkFileExists('Http/Kernel')) {
             $this->info("☑️ APP/Http/Kernel.php is already exists!");
         }else{
@@ -160,7 +160,7 @@ class ProtokitInitCommand extends Command
         }
 
         //console Kernel
-        $this->checkPath('Console');
+        $this->checkPath('../Console');
         if ($this->checkFileExists('Console/Kernel')) {
             $this->info("☑️ APP/Console/Kernel.php is already exists!");
         }else{
@@ -196,7 +196,7 @@ class ProtokitInitCommand extends Command
 
         file_put_contents($path, json_encode($json, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
 
-        $this->warn("⚠️⚠️==========> Run `composer dump-autoload` to apply changes. <==========⚠️⚠️");
+        $this->warn("⚠️  ==========> Run `composer dump-autoload` to apply changes. <==========  ⚠️");
     }
 
     private function createRouteServiceProvider(): void
