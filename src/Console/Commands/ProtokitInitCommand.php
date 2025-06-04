@@ -202,7 +202,7 @@ class ProtokitInitCommand extends Command
     private function createRouteServiceProvider(): void
     {
         if (file_exists(app_path('Providers/RouteServiceProvider.php'))) {
-            $this->info("☑️ APP/Protokit/Service.php is already exists!");
+            $this->info("☑️ APP/Providers/RouteServiceProvider.php is already exists!");
             return;
         };
 
