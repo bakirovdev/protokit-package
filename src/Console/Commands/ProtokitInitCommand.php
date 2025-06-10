@@ -13,11 +13,6 @@ class ProtokitInitCommand extends Command
     public function handle(): void
     {
         $this->checkPath();
-        $this->creteModel();
-        $this->creteQueryBuilder();
-        $this->createSearch();
-        $this->createService();
-        $this->createController();
         $this->createKernels();
 
         $addingRouteProvider = $this->ask("Do you want add RouteServiceProvider (Y/n)?", 'y');
@@ -38,17 +33,6 @@ class ProtokitInitCommand extends Command
 
     private function checkPath($path = null): void
     {
-        if ($path && !file_exists(app_path("Protokit/$path"))) {
-            mkdir(app_path("Protokit/$path"));
-            $this->info("✅ Protokit/$path folder is created.");
-            return;
-        }
-
-        if (!file_exists(app_path("Protokit"))) {
-            mkdir(app_path("Protokit"));
-            $this->info("✅ Protokit folder is created.");
-        }
-
         if (!file_exists(base_path("modules"))) {
             mkdir(base_path("modules"));
             $this->info("✅ Modules folder is created.");
@@ -63,66 +47,6 @@ class ProtokitInitCommand extends Command
     private function checkFileExists($path): bool
     {
         return file_exists(app_path('Protokit/'.$path.'.php')) ? true : false;
-    }
-
-    private function creteModel(): void
-    {
-        foreach (ModelFilesEnum::values() as $file) {
-            $classTemplate = $this->getStub("Model/$file");
-
-            if(!$this->checkFileExists("Model/$file")){
-                $path  = "Model";
-                $this->checkPath($path);
-                file_put_contents(app_path("Protokit/Model/{$file}.php"), $classTemplate);
-                $this->info("✅ APP/Protokit/Model/{$file}.php is created!");
-            }
-
-            $this->info("☑️ APP/Protokit/Model/{$file}.php is already exists!");
-        }
-    }
-
-    private function creteQueryBuilder(): void
-    {
-        if (!$this->checkFileExists('QueryBuilder')) {
-            $classTemplate = $this->getStub("QueryBuilder");
-            file_put_contents(app_path("Protokit/QueryBuilder.php"), $classTemplate);
-            $this->info("✅ APP/Protokit/QueryBuilder.php is created!");
-            return;
-        }
-        $this->info("☑️ APP/Protokit/QueryBuilder.php is already exists!");
-    }
-
-    private function createSearch(): void
-    {
-        if (!$this->checkFileExists('Search')) {
-            $classTemplate = $this->getStub("Search");
-            file_put_contents(app_path("Protokit/Search.php"), $classTemplate);
-            $this->info("✅ APP/Protokit/Search.php is created!");
-            return;
-        }
-        $this->info("☑️ APP/Protokit/Search.php is already exists!");
-    }
-
-    private function createController(): void
-    {
-        if (!$this->checkFileExists('Controller')) {
-            $classTemplate = $this->getStub("Controller");
-            file_put_contents(app_path("Protokit/Controller.php"), $classTemplate);
-            $this->info("✅ APP/Protokit/Controller.php is created!");
-            return;
-        }
-        $this->info("☑️ APP/Protokit/Controller.php is already exists!");
-    }
-
-    private function createService(): void
-    {
-        if (!$this->checkFileExists('Service')) {
-            $classTemplate = $this->getStub("Service");
-            file_put_contents(app_path("Protokit/Service.php"), $classTemplate);
-            $this->info("✅ APP/Protokit/Service.php is created!");
-            return;
-        }
-        $this->info("☑️ APP/Protokit/Service.php is already exists!");
     }
 
     private function createKernels(): void
