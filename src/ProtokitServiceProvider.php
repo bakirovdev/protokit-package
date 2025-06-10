@@ -17,7 +17,7 @@ class ProtokitServiceProvider extends ServiceProvider
     {
         if ($this->app->runningInConsole()) {
 
-            $this->publishes([__DIR__.'/../config/protokit.php' => config_path('protokit.php')], 'protokit');
+            $this->publishes([__DIR__.'/config/protokit.php' => config_path('protokit.php')], 'protokit');
 
             $this->commands([
                 CreateModelCommand::class,
