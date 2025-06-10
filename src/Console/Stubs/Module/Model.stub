@@ -2,10 +2,10 @@
 
 namespace Modules\{{MODULE_NAME}}\Models;
 
-
+use App\Protokit\Model\Model;
 use Modules\{{MODULE_NAME}}\Services\{{CLASS_NAME}}Service;
 
-class {{CLASS_NAME}} extends Controller
+class {{CLASS_NAME}} extends Model
 {
     public function getService(): {{CLASS_NAME}}Service
     {

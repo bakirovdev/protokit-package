@@ -18,19 +18,51 @@ class ProtokitInitCommand extends Command
         $this->createSearch();
         $this->createService();
         $this->createController();
-        $this->createRouting();
-        $this->createExceptions();
         $this->createKernels();
-        $this->createApplication();        
-        $this->createAppFile();
+
         $addingRouteProvider = $this->ask("Do you want add RouteServiceProvider (Y/n)?", 'y');
         if ($addingRouteProvider == 'y' ||  $addingRouteProvider == 'yes' || $addingRouteProvider == 'Y') {
             $this->createRouteServiceProvider();    
         }
 
         $this->addingAutoload();
+        $this->bindings();
 
         $this->info("Protokit initals done successfully.");
+    }
+
+    public function getStub(string $stubName)
+    {
+        return file_get_contents(__DIR__ . "/../Stubs/$stubName.stub");
+    }
+
+    private function checkPath($path = null): void
+    {
+        if ($path && !file_exists(app_path("Protokit/$path"))) {
+            mkdir(app_path("Protokit/$path"));
+            $this->info("✅ Protokit/$path folder is created.");
+            return;
+        }
+
+        if (!file_exists(app_path("Protokit"))) {
+            mkdir(app_path("Protokit"));
+            $this->info("✅ Protokit folder is created.");
+        }
+
+        if (!file_exists(base_path("modules"))) {
+            mkdir(base_path("modules"));
+            $this->info("✅ Modules folder is created.");
+        }
+
+        if (!file_exists(base_path("http"))) {
+            mkdir(base_path("http"));
+            $this->info("✅ Http folder is created.");
+        }
+    }
+
+    private function checkFileExists($path): bool
+    {
+        return file_exists(app_path('Protokit/'.$path.'.php')) ? true : false;
     }
 
     private function creteModel(): void
@@ -82,27 +114,6 @@ class ProtokitInitCommand extends Command
         $this->info("☑️ APP/Protokit/Controller.php is already exists!");
     }
 
-    private function createApplication(): void
-    {
-        if (!$this->checkFileExists('Application')) {
-            $classTemplate = $this->getStub("Application");
-            file_put_contents(app_path("Protokit/Application.php"), $classTemplate);
-            $this->info("✅ APP/Protokit/Application.php is created!");
-            return;
-        }
-        $this->info("☑️ APP/Protokit/Application.php is already exists!");
-    }
-
-    private function createAppFile(): void
-    {
-        if (file_exists(base_path('bootstrap/app.php'))) {
-            $classTemplate = $this->getStub("app");
-            file_put_contents(base_path('bootstrap/app.php'), $classTemplate);
-            $this->info("✅ bootstrap/app.php is updated!");
-            return;
-        }
-    }
-
     private function createService(): void
     {
         if (!$this->checkFileExists('Service')) {
@@ -112,39 +123,6 @@ class ProtokitInitCommand extends Command
             return;
         }
         $this->info("☑️ APP/Protokit/Service.php is already exists!");
-    }
-
-    private function createRouting(): void
-    {
-        $this->checkPath('Routing');
-
-        if ($this->checkFileExists('Routing/Router')) {
-            $this->info("☑️ APP/Protokit/Routing/Router.php is already exists!");
-        }else{
-            $classTemplate = $this->getStub("Routing/Router");
-            file_put_contents(app_path("Protokit/Routing/Router.php"), $classTemplate);
-            $this->info("✅ APP/Protokit/Routing/Router.php is created!");
-        }
-
-        if ($this->checkFileExists('Routing/ResourceRegistrar')) {
-            $this->info("☑️ APP/Protokit/Routing/ResourceRegistrar.php is already exists!");
-        }else{
-            $classTemplate = $this->getStub("Routing/ResourceRegistrar");
-            file_put_contents(app_path("Protokit/Routing/ResourceRegistrar.php"), $classTemplate);
-            $this->info("✅ APP/Protokit/Routing/ResourceRegistrar.php is created!");
-        }
-    }
-
-    private function createExceptions(): void
-    {
-        $this->checkPath('Exceptions');
-        if ($this->checkFileExists('Exceptions/Handler')) {
-            $this->info("☑️ APP/Protokit/Exceptions/Handler.php is already exists!");
-        }else{
-            $classTemplate = $this->getStub("Exception/Handler");
-            file_put_contents(app_path("Protokit/Exceptions/Handler.php"), $classTemplate);
-            $this->info("✅ APP/Protokit/Exceptions/Handler.php is created!");
-        }
     }
 
     private function createKernels(): void
@@ -168,35 +146,6 @@ class ProtokitInitCommand extends Command
             file_put_contents(app_path("Console/Kernel.php"), $classTemplate);
             $this->info("✅ APP/Console/Kernel.php.php is created!");
         }
-    }
-
-    public function addingAutoload(): void
-    {
-        $path = base_path('composer.json');
-
-        if (!file_exists($path))
-            $this->error("composer.json not found.");
-        
-
-        $json = json_decode(file_get_contents($path), true);
-
-        if (!isset($json['autoload']['psr-4'])) {
-            $json['autoload']['psr-4'] = [];
-        }
-
-        if (!isset($json['autoload']['psr-4']['Moduels\\'])) {
-            $json['autoload']['psr-4']['Modules\\'] = 'modules/';            
-            $this->info("Added autoload: Modules\\ => modules/");
-        }
-
-        if (!isset($json['autoload']['psr-4']['Http\\'])) {
-            $json['autoload']['psr-4']['Http\\'] = 'http/';
-            $this->info("Added autoload: Http\\ => http/");
-        }
-
-        file_put_contents($path, json_encode($json, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
-
-        $this->warn("⚠️  ==========> Run `composer dump-autoload` to apply changes. <==========  ⚠️");
     }
 
     private function createRouteServiceProvider(): void
@@ -235,37 +184,56 @@ class ProtokitInitCommand extends Command
         $this->info("RouteServiceProvider registered successfully.");
     }
 
-    public function getStub(string $stubName)
+    private function bindings(): void
     {
-        return file_get_contents(__DIR__ . "/../Stubs/$stubName.stub");
+        $path = app_path('Providers/AppServeProvider.php');
+
+        $bindings = $this->getStub("Bindings");
+
+        if (!file_exists($path))
+            $this->error("AppServeProvider.php not found.");
+        
+
+        $appServiceProvider = file_get_contents($path);
+
+        $register = 'public function register()'
+            . chr(10)
+            . '    {' . chr(10)
+            . $bindings;
+
+        $appServiceProvider = str_replace('public function register()' . chr(10) . '    {', $register, $appServiceProvider);
+
+        file_put_contents($path, $appServiceProvider);
+
+        $this->info("✅ App/Providers/AppServiceProvider.php is changed!");
     }
 
-    private function checkPath($path = null): void
+    public function addingAutoload(): void
     {
-        if ($path && !file_exists(app_path("Protokit/$path"))) {
-            mkdir(app_path("Protokit/$path"));
-            $this->info("✅ Protokit/$path folder is created.");
-            return;
+        $path = base_path('composer.json');
+
+        if (!file_exists($path))
+            $this->error("composer.json not found.");
+        
+
+        $json = json_decode(file_get_contents($path), true);
+
+        if (!isset($json['autoload']['psr-4'])) {
+            $json['autoload']['psr-4'] = [];
         }
 
-        if (!file_exists(app_path("Protokit"))) {
-            mkdir(app_path("Protokit"));
-            $this->info("✅ Protokit folder is created.");
+        if (!isset($json['autoload']['psr-4']['Moduels\\'])) {
+            $json['autoload']['psr-4']['Modules\\'] = 'modules/';            
+            $this->info("Added autoload: Modules\\ => modules/");
         }
 
-        if (!file_exists(base_path("modules"))) {
-            mkdir(base_path("modules"));
-            $this->info("✅ Modules folder is created.");
+        if (!isset($json['autoload']['psr-4']['Http\\'])) {
+            $json['autoload']['psr-4']['Http\\'] = 'http/';
+            $this->info("Added autoload: Http\\ => http/");
         }
 
-        if (!file_exists(base_path("http"))) {
-            mkdir(base_path("http"));
-            $this->info("✅ Http folder is created.");
-        }
-    }
+        file_put_contents($path, json_encode($json, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
 
-    private function checkFileExists($path): bool
-    {
-        return file_exists(app_path('Protokit/'.$path.'.php')) ? true : false;
+        $this->warn("⚠️  ==========> Run `composer dump-autoload` to apply changes. <==========  ⚠️");
     }
 }
