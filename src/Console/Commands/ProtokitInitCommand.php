@@ -110,26 +110,32 @@ class ProtokitInitCommand extends Command
 
     private function bindings(): void
     {
-        $path = app_path('Providers/AppServiceProvider.php');
+        $providerPath = app_path('Providers/AppServiceProvider.php');
+        $stubContent = $this->getStub("Bindings");;
 
-        $bindings = $this->getStub("Bindings");
+        if (!file_exists($providerPath)) {
+            $this->error('AppServiceProvider file is missing.');
+            return;
+        }
 
-        if (!file_exists($path))
-            $this->error("AppServiceProvider.php not found.");
-        
+        $providerContent = file_get_contents($providerPath);
 
-        $appServiceProvider = file_get_contents($path);
+        // Find the "register" method body
+        $pattern = '/(public function register\(\): void\s*\{\n)([\s\S]*?)(^\s*\})/m';
 
-        $register = 'public function register()'
-            . chr(10)
-            . '    {' . chr(10)
-            . $bindings;
+        if (!preg_match($pattern, $providerContent, $matches)) {
+            $this->error('Could not locate the register() method.');
+            return;
+        }
 
-        $appServiceProvider = str_replace('public function register()' . chr(10) . '    {', $register, $appServiceProvider);
 
-        file_put_contents($path, $appServiceProvider);
+        $newRegisterBody = rtrim($matches[2]) . "\n\n" . $stubContent . "\n";
+        $replacement = $matches[1] . $newRegisterBody . $matches[3];
+        $newContent = preg_replace($pattern, $replacement, $providerContent);
 
-        $this->info("✅ App/Providers/AppServiceProvider.php is changed!");
+        file_put_contents($providerPath, $newContent);
+
+        $this->info('Singleton bindings successfully appended to AppServiceProvider.');
     }
 
     public function addingAutoload(): void
