@@ -186,12 +186,12 @@ class ProtokitInitCommand extends Command
 
     private function bindings(): void
     {
-        $path = app_path('Providers/AppServeProvider.php');
+        $path = app_path('Providers/AppServiceProvider.php');
 
         $bindings = $this->getStub("Bindings");
 
         if (!file_exists($path))
-            $this->error("AppServeProvider.php not found.");
+            $this->error("AppServiceProvider.php not found.");
         
 
         $appServiceProvider = file_get_contents($path);
