@@ -100,7 +100,7 @@ class CreateModelCommand extends Command
         }else {
             $seederTemplate = $this->getStub('seeder');
             $seederTemplate = str_replace("{{TABLE_NAME}}", "$fileName", $seederTemplate);
-            file_put_contents(base_path("modules/$moduleName/Database/Seeder/$fileName-seeder.php"), $seederTemplate);
+            file_put_contents(base_path("modules/$moduleName/Database/Seeders/$fileName-seeder.php"), $seederTemplate);
         }
     }
 
