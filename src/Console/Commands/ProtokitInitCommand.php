@@ -3,7 +3,6 @@
 namespace Bakirov\Protokit\Console\Commands;
 
 use Illuminate\Console\Command;
-use Bakirov\Protokit\Enums\ModelFilesEnum;
 
 class ProtokitInitCommand extends Command
 {

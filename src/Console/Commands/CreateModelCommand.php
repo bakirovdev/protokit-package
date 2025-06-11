@@ -2,8 +2,9 @@
 
 namespace Bakirov\Protokit\Console\Commands;
 
-use Bakirov\Protokit\Enums\ModuleClassEnum;
+use Illuminate\Support\Str;
 use Illuminate\Console\Command;
+use Bakirov\Protokit\Enums\ModuleClassEnum;
 
 class CreateModelCommand extends Command
 {
@@ -25,8 +26,10 @@ class CreateModelCommand extends Command
 
     private function createModuleClasses(string $name, array|null $models = null): void
     {
+        $name = ucfirst(Str::lower($name));
         if ($models) {
             foreach ($models as $model) {
+                $model = ucfirst(Str::lower($model));
                 foreach (ModuleClassEnum::values() as $class) {
                     $className = $model;
                     if ($class !== ModuleClassEnum::Model->value)                        
@@ -42,6 +45,8 @@ class CreateModelCommand extends Command
                     file_put_contents(base_path("modules/{$name}/{$class}s/{$className}.php"), $classTemplate);
                     $this->info("✅ Modules/{$name}/{$class}s/{$className}.php is created!");
                 }
+
+                $this->createDatabase($name, $model);
             }
             return;
         }
@@ -59,7 +64,43 @@ class CreateModelCommand extends Command
             $this->checkEachFile($path);
 
             file_put_contents(base_path("modules/{$name}/{$class}s/{$className}.php"), $classTemplate);
+
+            $this->createDatabase($name, $name);
             $this->info("✅ Modules/{$name}/{$class}s/{$className}.php is created!");
+        }
+    }
+
+    private function createDatabase($moduleName, $model):void
+    {
+        if (!file_exists(base_path("modules/$moduleName/Database"))) {
+            mkdir(base_path("modules/$moduleName/Database"));
+            mkdir(base_path("modules/$moduleName/Database/Migrations"));
+            mkdir(base_path("modules/$moduleName/Database/Seeders"));
+            $this->info("✅ modules folder is created.");
+        }elseif (!file_exists(base_path("modules/$moduleName/Database/Migrations"))) {
+            mkdir(base_path("modules/$moduleName/Database/Migrations"));
+        }elseif(!file_exists(base_path("modules/$moduleName/Database/Seeders"))){
+            mkdir(base_path("modules/$moduleName/Database/Seeders"));
+        }
+
+        $fileName = Str::plural(Str::lower($model));
+
+        // create migration
+        if (file_exists(base_path("modules/$moduleName/Database/Migrations/$fileName.php"))){
+            $this->error("$fileName.php  migration is already exists");
+        }else {
+            $migrationTemplate = $this->getStub('migration');
+            $migrationTemplate = str_replace("{{TABLE_NAME}}", "$fileName", $migrationTemplate);
+            file_put_contents(base_path("modules/$moduleName/Database/Migrations/$fileName.php"), $migrationTemplate);
+        }
+
+        // createSeeder
+        if (file_exists(base_path("modules/$moduleName/Database/Seeders/$fileName-seeder.php"))){
+            $this->error("$fileName-seeder.php  migration is already exists");
+        }else {
+            $seederTemplate = $this->getStub('seeder');
+            $seederTemplate = str_replace("{{TABLE_NAME}}", "$fileName", $seederTemplate);
+            file_put_contents(base_path("modules/$moduleName/Database/Seeder/$fileName-seeder.php"), $seederTemplate);
         }
     }
 
@@ -87,4 +128,6 @@ class CreateModelCommand extends Command
             mkdir(base_path("$path"));
         }
     }
+
+    
 }

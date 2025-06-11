@@ -8,6 +8,7 @@ enum ModuleClassEnum: string
     case Service = 'Service';
     case Observer = 'Observer';
     case Resource = 'Resource';
+    case Search = 'Search';
 
     public static function values(): array
     {
