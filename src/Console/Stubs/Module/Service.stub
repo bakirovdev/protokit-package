@@ -2,7 +2,7 @@
 
 namespace Modules\{{MODULE_NAME}}\Services;
 
-use App\Protokit\Model\Model;
+use Bakirov\Protokit\Base\Model\Model;
 
 class {{CLASS_NAME}}
 {

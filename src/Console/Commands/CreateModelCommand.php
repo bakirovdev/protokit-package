@@ -26,10 +26,8 @@ class CreateModelCommand extends Command
 
     private function createModuleClasses(string $name, array|null $models = null): void
     {
-        $name = ucfirst(Str::lower($name));
         if ($models) {
             foreach ($models as $model) {
-                $model = ucfirst(Str::lower($model));
                 foreach (ModuleClassEnum::values() as $class) {
                     $className = $model;
                     if ($class !== ModuleClassEnum::Model->value)                        
