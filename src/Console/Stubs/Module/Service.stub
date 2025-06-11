@@ -2,15 +2,9 @@
 
 namespace Modules\{{MODULE_NAME}}\Services;
 
-use Bakirov\Protokit\Base\Model\Model;
+use Bakirov\Protokit\Base\Service;
 
-class {{CLASS_NAME}}
+class {{CLASS_NAME}} extends Service
 {
-    public function __construct(protected Model $model)
-    {}
-
-    public function getService(): {{CLASS_NAME}}
-    {
-        return new {{CLASS_NAME}}Service($this);
-    }
+    //
 }

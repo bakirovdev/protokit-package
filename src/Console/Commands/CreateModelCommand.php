@@ -26,6 +26,7 @@ class CreateModelCommand extends Command
 
     private function createModuleClasses(string $name, array|null $models = null): void
     {
+        $this->createRelation($name);
         if ($models) {
             foreach ($models as $model) {
                 foreach (ModuleClassEnum::values() as $class) {
@@ -85,7 +86,7 @@ class CreateModelCommand extends Command
 
         // create migration
         if (file_exists(base_path("modules/$moduleName/Database/Migrations/$fileName.php"))){
-            $this->error("$fileName.php  migration is already exists");
+            $this->error("❗️  $fileName.php  migration is already exists");
         }else {
             $migrationTemplate = $this->getStub('migration');
             $migrationTemplate = str_replace("{{TABLE_NAME}}", "$fileName", $migrationTemplate);
@@ -94,11 +95,26 @@ class CreateModelCommand extends Command
 
         // createSeeder
         if (file_exists(base_path("modules/$moduleName/Database/Seeders/$fileName-seeder.php"))){
-            $this->error("$fileName-seeder.php  migration is already exists");
+            $this->error("❗️  $fileName-seeder.php  migration is already exists");
         }else {
             $seederTemplate = $this->getStub('seeder');
             $seederTemplate = str_replace("{{TABLE_NAME}}", "$fileName", $seederTemplate);
             file_put_contents(base_path("modules/$moduleName/Database/Seeders/$fileName-seeder.php"), $seederTemplate);
+        }
+
+    }
+
+    public function createRelation(string $moduleName)
+    {
+        if (!file_exists(base_path("modules/$moduleName/Database")))
+            mkdir(base_path("modules/$moduleName/Database"));
+         
+        $fileName = Str::plural(Str::snake($moduleName)).'-relations';
+        if (file_exists(base_path("modules/$moduleName/Database/$fileName.php"))){
+            $this->error("❗️  $moduleName-relations.php  migration is already exists");
+        }else {
+            $relationTemplate = $this->getStub('relation');
+            file_put_contents(base_path("modules/$moduleName/Database/$fileName.php"), $relationTemplate);
         }
     }
 
