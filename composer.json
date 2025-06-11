@@ -23,7 +23,8 @@
     
     "require": {
         "php": ">=8.2",
-        "illuminate/console": "^12.15"
+        "illuminate/console": "^12.15",
+        "laravel/framework": "^12.18"
     }
 
 }

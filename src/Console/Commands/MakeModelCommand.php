@@ -6,9 +6,9 @@ use Illuminate\Support\Str;
 use Illuminate\Console\Command;
 use Bakirov\Protokit\Enums\ModuleClassEnum;
 
-class CreateModelCommand extends Command
+class MakeModelCommand extends Command
 {
-    protected $signature = 'protokit:create-module {name}  {--models=}'; 
+    protected $signature = 'protokit:make-module {name}  {--models=}'; 
     protected $description = 'This will create new Module by the name and create models';
     
     public function handle(): void

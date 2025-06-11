@@ -2,11 +2,10 @@
 
 namespace Bakirov\Protokit\Enums;
 
-enum ModelFilesEnum: string
+enum HttpComponentClassEnum: string
 {
-    case Model = 'Model';
-    case MRT = 'ModelRelationsTrait';
-    case MST = 'ModelSafelyTrait';
+    case Controller = 'Controller';
+    case Requests = 'Requests';
 
     public static function values(): array
     {
