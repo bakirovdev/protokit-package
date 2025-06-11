@@ -81,7 +81,7 @@ class CreateModelCommand extends Command
             mkdir(base_path("modules/$moduleName/Database/Seeders"));
         }
 
-        $fileName = Str::plural(Str::lower($model));
+        $fileName = Str::plural(Str::snake($model));
 
         // create migration
         if (file_exists(base_path("modules/$moduleName/Database/Migrations/$fileName.php"))){
