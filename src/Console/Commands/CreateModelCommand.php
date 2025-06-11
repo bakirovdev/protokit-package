@@ -26,7 +26,7 @@ class CreateModelCommand extends Command
 
     private function createModuleClasses(string $name, array|null $models = null): void
     {
-        $this->createRelation($name);
+        $this->configureDatabase($name);
         if ($models) {
             foreach ($models as $model) {
                 foreach (ModuleClassEnum::values() as $class) {
@@ -69,8 +69,9 @@ class CreateModelCommand extends Command
         }
     }
 
-    private function createDatabase($moduleName, $model):void
+    public function configureDatabase(string $moduleName)
     {
+
         if (!file_exists(base_path("modules/$moduleName/Database"))) {
             mkdir(base_path("modules/$moduleName/Database"));
             mkdir(base_path("modules/$moduleName/Database/Migrations"));
@@ -81,7 +82,18 @@ class CreateModelCommand extends Command
         }elseif(!file_exists(base_path("modules/$moduleName/Database/Seeders"))){
             mkdir(base_path("modules/$moduleName/Database/Seeders"));
         }
+         
+        $fileName = Str::plural(Str::snake($moduleName)).'-relations';
+        if (file_exists(base_path("modules/$moduleName/Database/$fileName.php"))){
+            $this->error("❗️  $moduleName-relations.php  migration is already exists");
+        }else {
+            $relationTemplate = $this->getStub('relation');
+            file_put_contents(base_path("modules/$moduleName/Database/$fileName.php"), $relationTemplate);
+        }
+    }
 
+    private function createDatabase($moduleName, $model):void
+    {
         $fileName = Str::plural(Str::snake($model));
 
         // create migration
@@ -102,20 +114,6 @@ class CreateModelCommand extends Command
             file_put_contents(base_path("modules/$moduleName/Database/Seeders/$fileName-seeder.php"), $seederTemplate);
         }
 
-    }
-
-    public function createRelation(string $moduleName)
-    {
-        if (!file_exists(base_path("modules/$moduleName/Database")))
-            mkdir(base_path("modules/$moduleName/Database"));
-         
-        $fileName = Str::plural(Str::snake($moduleName)).'-relations';
-        if (file_exists(base_path("modules/$moduleName/Database/$fileName.php"))){
-            $this->error("❗️  $moduleName-relations.php  migration is already exists");
-        }else {
-            $relationTemplate = $this->getStub('relation');
-            file_put_contents(base_path("modules/$moduleName/Database/$fileName.php"), $relationTemplate);
-        }
     }
 
     public function getStub(string $stubName)
