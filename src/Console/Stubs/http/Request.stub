@@ -1,0 +1,45 @@
+<?php
+
+namespace Http\{{MODULE_NAME}}\Requests;
+
+use App\Helpers\Validation\ValidationFileHelper;
+use App\Rules\UniqueRule;
+use Bakirov\Protokit\Base\Request;
+use Modules\Company\Models\Company;
+
+class {{CLASS_NAME}} extends BaseRequest
+{
+    protected array $filesSavePaths = [
+        'logo' => 'brand_logo'
+    ];
+
+    public function nonLocalizedRules(): array
+    {
+        return [
+            'name' => [
+                'required',
+                'string',
+                new UniqueRule(
+                    model: $this->model,
+                    fieldIsLocalized: false,
+                    showDetailedErrorMessage: false,
+                    additionalQuery: function ($query) {
+                        $query->where('company_id', request()->user()->company_id);
+                    }
+                ),
+            ],
+            'logo' => [
+                'nullable',
+                ValidationFileHelper::image()
+            ],
+
+        ];
+    }
+
+    protected function passedValidation(): void
+    {
+        parent::passedValidation();
+        $this->validatedData['company_id'] = request()->user()->company_id;
+
+    }
+}

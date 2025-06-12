@@ -1,0 +1,10 @@
+<?php
+
+namespace Http\{{MODULE_NAME}}\Controllers;
+
+use Bakirov\Protokit\Base\Controller;
+
+class {{CLASS_NAME}} extends Controller
+{
+
+}

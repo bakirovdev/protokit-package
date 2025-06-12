@@ -2,8 +2,8 @@
 
 namespace Bakirov\Protokit\Base;
 
-use Bakirov\Protokit\Search\SearchFilter;
-use Bakirov\Protokit\Search\SearchShow;
+use Bakirov\Protokit\Base\Search\SearchFilter;
+use Bakirov\Protokit\Base\Search\SearchShow;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Arr;
 
