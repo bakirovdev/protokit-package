@@ -2,11 +2,9 @@
 
 namespace Bakirov\Protokit\Console\Commands;
 
-use Bakirov\Protokit\Enums\HttpComponentClassEnum;
 use Illuminate\Support\Str;
 use Illuminate\Console\Command;
-use Bakirov\Protokit\Enums\ModuleClassEnum;
-
+use Bakirov\Protokit\Enums\HttpComponentClassEnum;
 class MakeHttpComponentCommand extends Command
 {
     protected $signature = 'protokit:make-http-component {name}  {--models=}';

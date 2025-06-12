@@ -2,6 +2,7 @@
 
 namespace Bakirov\Protokit;
 
+use Bakirov\Protokit\Console\Commands\MakeHttpComponentCommand;
 use Illuminate\Support\ServiceProvider;
 use Bakirov\Protokit\Console\Commands\MakeModelCommand;
 use Bakirov\Protokit\Console\Commands\ProtokitInitCommand;
@@ -20,8 +21,9 @@ class ProtokitServiceProvider extends ServiceProvider
             $this->publishes([__DIR__.'/config/protokit.php' => config_path('protokit.php')], 'protokit');
 
             $this->commands([
-                MakeModelCommand::class,
                 ProtokitInitCommand::class,
+                MakeHttpComponentCommand::class,
+                MakeModelCommand::class,
             ]);
         }
     }
