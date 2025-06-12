@@ -30,7 +30,7 @@ class MakeHttpComponentCommand extends Command
                 foreach (HttpComponentClassEnum::values() as $class) {
                     $className = $model . $class;
 
-                    $classTemplate = $this->getStub('controller');
+                    $classTemplate = $this->getStub($class);
                     $classTemplate = str_replace("{{MODULE_NAME}}", "$name", $classTemplate);
                     $classTemplate = str_replace("{{CLASS_NAME}}", "$className", $classTemplate);
 
