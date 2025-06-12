@@ -131,7 +131,7 @@ class MakeHttpComponentCommand extends Command
 
     public function getStub(string $stubName)
     {
-        return file_get_contents(__DIR__ . "/../Stubs/Module/$stubName.stub");
+        return file_get_contents(__DIR__ . "/../Stubs/Http/$stubName.stub");
     }
 
     private function checkPath($name): void
