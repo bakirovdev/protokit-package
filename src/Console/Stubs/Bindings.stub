@@ -13,15 +13,15 @@
         //binding custom Bakirov\Protokit Exceptions
         $this->app->singleton(
             \Illuminate\Contracts\Debug\ExceptionHandler::class,
-            \Bakirov\Protokit\Exceptions\Handler::class
+            \Bakirov\Protokit\Base\Exceptions\Handler::class
         );
 
         //binding custom Bakirov\Protokit router
         $this->app->singleton('router', function ($app) {
-            return new \Bakirov\Protokit\Routing\Router($app['events'], $app);
+            return new \Bakirov\Protokit\Base\Routing\Router($app['events'], $app);
         });
 
         //binding custom Bakirov\Protokit ResourceRegistrar
         $this->app->bind(\Illuminate\Routing\ResourceRegistrar::class, function ($app) {
-            return new \Bakirov\Protokit\Routing\ResourceRegistrar($app['router']);
+            return new \Bakirov\Protokit\Base\Routing\ResourceRegistrar($app['router']);
         });
