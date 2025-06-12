@@ -1,0 +1,27 @@
+        //binding custom console kernel
+        $this->app->singleton(
+            \Illuminate\Foundation\Console\Kernel::class,
+            \App\Console\Kernel::class
+        );
+
+        //binding custom http kernel
+        $this->app->singleton(
+            \Illuminate\Contracts\Http\Kernel::class,
+            \App\Http\Kernel::class
+        );
+
+        //binding custom Bakirov\Protokit Exceptions
+        $this->app->singleton(
+            \Illuminate\Contracts\Debug\ExceptionHandler::class,
+            \Bakirov\Protokit\Base\Exceptions\Handler::class
+        );
+
+        //binding custom Bakirov\Protokit router
+        $this->app->singleton('router', function ($app) {
+            return new \Bakirov\Protokit\Base\Routing\Router($app['events'], $app);
+        });
+
+        //binding custom Bakirov\Protokit ResourceRegistrar
+        $this->app->bind(\Illuminate\Routing\ResourceRegistrar::class, function ($app) {
+            return new \Bakirov\Protokit\Base\Routing\ResourceRegistrar($app['router']);
+        });

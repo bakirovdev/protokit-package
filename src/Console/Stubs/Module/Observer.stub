@@ -1,0 +1,8 @@
+<?php
+
+namespace Modules\{{MODULE_NAME}}\Observers;
+
+class {{CLASS_NAME}}
+{
+    
+}

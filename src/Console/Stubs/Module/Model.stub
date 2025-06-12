@@ -1,0 +1,24 @@
+<?php
+
+namespace Modules\{{MODULE_NAME}}\Models;
+
+use Bakirov\Protokit\Base\Model\Model;
+use Modules\{{MODULE_NAME}}\Services\{{CLASS_NAME}}Service;
+use Modules\{{MODULE_NAME}}\Observers\{{CLASS_NAME}}Observer;
+
+class {{CLASS_NAME}} extends Model
+{
+
+    protected static function booted(): void
+    {
+        self::observe([
+            {{CLASS_NAME}}Observer::class
+        ]);
+    }
+
+    public function getService(): {{CLASS_NAME}}Service
+    {
+        return new {{CLASS_NAME}}Service($this);
+    }
+
+}
