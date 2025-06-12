@@ -2,9 +2,7 @@
 
 namespace Http\{{MODULE_NAME}}\Requests;
 
-use Bakirov\Protokit\Base\Rules\UniqueRule;
-use Bakirov\Protokit\Base\Request;
-use Bakirov\Protokit\Base\Helpers\Validation\ValidationFileHelper;
+use Bakirov\Protokit\Base\Request\Request;
 
 class {{CLASS_NAME}} extends Request
 {
