@@ -79,17 +79,19 @@ class MakeHttpComponentCommand extends Command
     public function addRoutes(string $moduleName, string $className, string $routeName)
     {
         $path = "http/{$moduleName}/routes.php";
+        
+        $partsModuleName = preg_split('/[\/\\\\]/', $moduleName);
+        $moduleNameLow = Str::plural(Str::snake(array_reverse($partsModuleName)[0]));
+
+        $partsRouteName = preg_split('/[\/\\\\]/', $routeName);
+        $routeName = Str::plural(Str::snake(array_reverse($partsRouteName)[0]));
+
         if (!file_exists(base_path($path))) {
             $routesStub = $this->getStub('routes');
 
-            $parts = preg_split('/[\/\\\\]/', $moduleName);
-            $moduleNameLow = Str::plural(Str::lower(array_reverse($parts)[0]));
+            
             $routesStub = str_replace('{{MODULE_NAME_LOW}}', $moduleNameLow, $routesStub);
-
-            $parts = preg_split('/[\/\\\\]/', $routeName);
-            $routeName = Str::plural(Str::lower(array_reverse($parts)[0]));
             $routesStub = str_replace('{{ROUTE_NAME}}', $routeName, $routesStub);
-
             $routesStub = str_replace('{{MODULE_NAME}}', $moduleName, $routesStub);
             $routesStub = str_replace('{{CLASS_NAME}}', $className, $routesStub);
             file_put_contents(base_path($path), $routesStub);
