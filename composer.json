@@ -22,18 +22,9 @@
     },
     
     "require": {
-        "php": ">=8.2"
-    },
-
-    "repositories": [
-        {
-            "type": "path",
-            "url": "./packages/Bakirov/Protokit",
-            "options": {
-                "symlink": true
-            }
-        }
-    ]
-
+        "php": ">=8.2",
+        "illuminate/console": "^12.15",
+        "laravel/framework": "^12"
+    }
 
 }
