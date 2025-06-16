@@ -26,13 +26,15 @@ class MakeHttpComponentCommand extends Command
 
     private function createModuleClasses(string $name, array|null $models = null): void
     {
+        $dashName  = Str::replace( ['/', '|' ], '\\', $name);
         if ($models) {
+            
             foreach ($models as $model) {
                 foreach (HttpComponentClassEnum::values() as $class) {
                     $className = $model . $class;
 
                     $classTemplate = $this->getStub($class);
-                    $classTemplate = str_replace("{{MODULE_NAME}}", "$name", $classTemplate);
+                    $classTemplate = str_replace("{{MODULE_NAME}}", "$dashName", $classTemplate);
                     $classTemplate = str_replace("{{CLASS_NAME}}", "$className", $classTemplate);
 
                     $path  = "http/{$name}/{$class}s";
@@ -52,6 +54,8 @@ class MakeHttpComponentCommand extends Command
             }
         } else {
             foreach (HttpComponentClassEnum::values() as $class) {
+                $className = preg_split('/|\\\\/', $name);
+                $className = array_reverse($className)[0];
                 $className = $name . $class;
 
                 $classTemplate = $this->getStub($class);
