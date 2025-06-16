@@ -89,8 +89,8 @@ class MakeHttpComponentCommand extends Command
         $partsModuleName = preg_split('/[\/\\\\]/', $moduleName);
         $moduleNameLow = Str::plural(Str::snake(array_reverse($partsModuleName)[0]));
 
-        $partsRouteName = preg_split('/[\/\\\\]/', $routeName);
-        $routeName = Str::plural(Str::snake(array_reverse($partsRouteName)[0]));
+        
+        $routeName = Str::plural(Str::snake(Str::replace(['/', '|', '\\'], '_', $routeName)));
 
         if (!file_exists(base_path($path))) {
             $routesStub = $this->getStub('routes');
