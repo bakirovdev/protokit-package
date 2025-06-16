@@ -103,7 +103,7 @@ class MakeHttpComponentCommand extends Command
         } else {
             $content = file_get_contents(base_path($path));
 
-            $useStatement = "use Http\\$moduleName\\Controllers\\$className;";
+            $useStatement = "use Http\\$dashModuleName\\Controllers\\$className;";
             if (!Str::contains($content, $useStatement)) {
                 // Add after the last use statement or at the top
                 if (preg_match_all('/^use .*;$/m', $content, $matches, PREG_OFFSET_CAPTURE)) {
