@@ -59,7 +59,7 @@ class MakeHttpComponentCommand extends Command
                 $className = $name . $class;
 
                 $classTemplate = $this->getStub($class);
-                $classTemplate = str_replace("{{MODULE_NAME}}", "$name", $classTemplate);
+                $classTemplate = str_replace("{{MODULE_NAME}}", "$dashName", $classTemplate);
                 $classTemplate = str_replace("{{CLASS_NAME}}", "$className", $classTemplate);
 
                 $path  = "http/{$name}/{$class}s";
