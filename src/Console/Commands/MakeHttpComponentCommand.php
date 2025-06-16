@@ -49,7 +49,7 @@ class MakeHttpComponentCommand extends Command
                     $this->info("✅ Http/{$name}/{$class}s/{$className}.php is created!");
                     
                     if ($class === HttpComponentClassEnum::Controller->value)
-                        $this->addRoutes($dashName, $className, $model);
+                        $this->addRoutes($name, $className, $model);
                 }
             }
         } else {
@@ -75,7 +75,7 @@ class MakeHttpComponentCommand extends Command
                 $this->info("✅ Http/{$name}/{$class}s/{$className}.php is created!");
 
                 if ($class === HttpComponentClassEnum::Controller->value) {
-                    $this->addRoutes($dashName, $className, $name);
+                    $this->addRoutes($name, $className, $name);
                 }
             }
         }
@@ -83,6 +83,7 @@ class MakeHttpComponentCommand extends Command
 
     public function addRoutes(string $moduleName, string $className, string $routeName)
     {
+        $dashModuleName = Str::replace(['/', '|'], '\\', $moduleName);
         $path = "http/{$moduleName}/routes.php";
         
         $partsModuleName = preg_split('/[\/\\\\]/', $moduleName);
@@ -94,10 +95,9 @@ class MakeHttpComponentCommand extends Command
         if (!file_exists(base_path($path))) {
             $routesStub = $this->getStub('routes');
 
-            
             $routesStub = str_replace('{{MODULE_NAME_LOW}}', $moduleNameLow, $routesStub);
             $routesStub = str_replace('{{ROUTE_NAME}}', $routeName, $routesStub);
-            $routesStub = str_replace('{{MODULE_NAME}}', $moduleName, $routesStub);
+            $routesStub = str_replace('{{MODULE_NAME}}', $dashModuleName, $routesStub);
             $routesStub = str_replace('{{CLASS_NAME}}', $className, $routesStub);
             file_put_contents(base_path($path), $routesStub);
         } else {
