@@ -30,6 +30,7 @@ class MakeModelCommand extends Command
         if ($models) {
             foreach ($models as $model) {
                 foreach (ModuleClassEnum::values() as $class) {
+                    $classPlural = Str::plural($class);
                     $className = $model;
                     if ($class !== ModuleClassEnum::Model->value)                        
                         $className = $model.$class;
@@ -37,12 +38,12 @@ class MakeModelCommand extends Command
                     $classTemplate = $this->getStub($class);
                     $classTemplate = str_replace("{{MODULE_NAME}}", "$name", $classTemplate);
                     $classTemplate = str_replace("{{CLASS_NAME}}", "$className", $classTemplate);
-
-                    $path  = "modules/{$name}/{$class}s";
+                    
+                    $path  = "modules/{$name}/{$classPlural}";
                     $this->checkEachFile($path);
 
-                    file_put_contents(base_path("modules/{$name}/{$class}s/{$className}.php"), $classTemplate);
-                    $this->info("✅ Modules/{$name}/{$class}s/{$className}.php is created!");
+                    file_put_contents(base_path("modules/{$name}/{$classPlural}/{$className}.php"), $classTemplate);
+                    $this->info("✅ Modules/{$name}/{$classPlural}/{$className}.php is created!");
                 }
 
                 $this->createDatabase($name, $model);
@@ -51,6 +52,7 @@ class MakeModelCommand extends Command
         }
 
         foreach (ModuleClassEnum::values() as $class) {
+            $classPlural = Str::plural($class);
             $className = $name;
             if ($class !== ModuleClassEnum::Model->value)
                 $className = $name.$class;
@@ -62,10 +64,10 @@ class MakeModelCommand extends Command
             $path  = "modules/{$name}/{$class}s";
             $this->checkEachFile($path);
 
-            file_put_contents(base_path("modules/{$name}/{$class}s/{$className}.php"), $classTemplate);
+            file_put_contents(base_path("modules/{$name}/{$classPlural}/{$className}.php"), $classTemplate);
 
             $this->createDatabase($name, $name);
-            $this->info("✅ Modules/{$name}/{$class}s/{$className}.php is created!");
+            $this->info("✅ Modules/{$name}/{$classPlural}/{$className}.php is created!");
         }
     }
 

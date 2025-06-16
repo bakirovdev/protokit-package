@@ -1,0 +1,23 @@
+<?php
+
+namespace Http\{{MODULE_NAME}}\Controllers;
+
+use Bakirov\Protokit\Base\Controller;
+use Modules\{{MODULE_NAME}}\Models\{{MODEL_NAME}};
+use Modules\{{MODULE_NAME}}\Searches\{{MODEL_NAME}};
+use Modules\{{MODULE_NAME}}\Models\{{MODEL_NAME}};
+
+class {{CLASS_NAME}} extends Controller
+{
+    public function __construct()
+    {
+        
+        parent::__construct(
+            model: new User(),
+            search: New UserSearch(),
+            filter: new UserFilter(),
+            resourceClass: UserResource::class,
+            requestClass: UserRequest::class
+        );
+    }
+}

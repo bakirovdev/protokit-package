@@ -1,0 +1,9 @@
+<?php
+
+use Illuminate\Support\Facades\Route;
+use Http\{{MODULE_NAME}}\Controllers\{{CLASS_NAME}};
+
+Route::prefix('{{MODULE_NAME_LOW}}')
+    ->group(function(){
+        Route::apiResource('{{ROUTE_NAME}}', {{CLASS_NAME}}::class);
+    });
