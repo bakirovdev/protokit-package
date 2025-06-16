@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Request;
+namespace Bakirov\Protokit\Base\Request;
 
 use Bakirov\Protokit\Base\Model\Model;
 use Bakirov\Protokit\Base\Helpers\FileHelper;
