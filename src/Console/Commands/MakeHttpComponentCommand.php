@@ -49,7 +49,7 @@ class MakeHttpComponentCommand extends Command
                     $this->info("✅ Http/{$name}/{$class}s/{$className}.php is created!");
                     
                     if ($class === HttpComponentClassEnum::Controller->value)
-                        $this->addRoutes($name, $className, $model);
+                        $this->addRoutes($dashName, $className, $model);
                 }
             }
         } else {
@@ -75,7 +75,7 @@ class MakeHttpComponentCommand extends Command
                 $this->info("✅ Http/{$name}/{$class}s/{$className}.php is created!");
 
                 if ($class === HttpComponentClassEnum::Controller->value) {
-                    $this->addRoutes($name, $className, $name);
+                    $this->addRoutes($dashName, $className, $name);
                 }
             }
         }
