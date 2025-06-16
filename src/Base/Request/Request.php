@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Request;
 
 use Bakirov\Protokit\Base\Model\Model;
 use Bakirov\Protokit\Base\Helpers\FileHelper;
@@ -9,7 +9,7 @@ use Illuminate\Support\Str;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Foundation\Http\FormRequest;
 
-class BaseRequest extends FormRequest
+class Request extends FormRequest
 {
     public Model $model;
     public array $validatedData;

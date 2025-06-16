@@ -13,6 +13,7 @@ class MakeHttpComponentCommand extends Command
     public function handle(): void
     {
         $name = $this->argument('name');
+        $name = Str::replace(['\\', '|' ], '/', $name);
         $models = $this->option('models');
         if ($models)
             $models = explode(',', $models);
@@ -20,7 +21,7 @@ class MakeHttpComponentCommand extends Command
         $this->checkPath($name);
         $this->createModuleClasses($name, $models);
 
-        $this->info("Model class '$name' created successfully.");
+        $this->info("Http Component '$name' created successfully.");
     }
 
     private function createModuleClasses(string $name, array|null $models = null): void
@@ -150,14 +151,20 @@ class MakeHttpComponentCommand extends Command
 
     private function checkPath($name): void
     {
+        $paths = preg_split('/[\/\\\\]/', $name);
+        
         if (!file_exists(base_path("http"))) {
             mkdir(base_path("http"));
             $this->info("✅ http folder is created.");
         }
 
-        if (!file_exists(base_path("http/$name"))) {
-            mkdir(base_path("http/$name"));
-            $this->info("✅ $name folder is created.");
+        $collectedPath = '';
+        foreach ($paths as $path) {
+            $collectedPath .= ucfirst($path) . '/';
+            if (!file_exists(base_path("http/$collectedPath"))) {
+                mkdir(base_path("http/$collectedPath"));
+                $this->info("✅ $collectedPath folder is created.");
+            }
         }
     }
 
