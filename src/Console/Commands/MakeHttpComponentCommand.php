@@ -54,7 +54,7 @@ class MakeHttpComponentCommand extends Command
             }
         } else {
             foreach (HttpComponentClassEnum::values() as $class) {
-                $className = preg_split('/|\\\\/', $name);
+                $className = preg_split('/[\/\\\\]/', $name);
                 $className = array_reverse($className)[0];
                 $className = $className . $class;
 
