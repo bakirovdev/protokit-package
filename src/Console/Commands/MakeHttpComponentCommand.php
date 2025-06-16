@@ -56,7 +56,7 @@ class MakeHttpComponentCommand extends Command
             foreach (HttpComponentClassEnum::values() as $class) {
                 $className = preg_split('/|\\\\/', $name);
                 $className = array_reverse($className)[0];
-                $className = $name . $class;
+                $className = $className . $class;
 
                 $classTemplate = $this->getStub($class);
                 $classTemplate = str_replace("{{MODULE_NAME}}", "$dashName", $classTemplate);
