@@ -28,7 +28,7 @@ class MakeHttpComponentCommand extends Command
     {
         $dashName  = Str::replace( ['/', '|' ], '\\', $name);
         if ($models) {
-            
+
             foreach ($models as $model) {
                 foreach (HttpComponentClassEnum::values() as $class) {
                     $className = $model . $class;
@@ -47,7 +47,7 @@ class MakeHttpComponentCommand extends Command
 
                     file_put_contents(base_path("http/{$name}/{$class}s/{$className}.php"), $classTemplate);
                     $this->info("✅ Http/{$name}/{$class}s/{$className}.php is created!");
-                    
+
                     if ($class === HttpComponentClassEnum::Controller->value)
                         $this->addRoutes($name, $className, $model);
                 }
@@ -85,15 +85,14 @@ class MakeHttpComponentCommand extends Command
     {
         $dashModuleName = Str::replace(['/', '|'], '\\', $moduleName);
         $path = "http/{$moduleName}/routes.php";
-        
-        $partsModuleName = preg_split('/[\/\\\\]/', $moduleName);
-        $moduleNameLow = Str::plural(Str::snake(array_reverse($partsModuleName)[0]));
 
-        
-        $routeName = Str::plural(Str::snake(Str::replace(['/', '|', '\\'], '_', $routeName)));
+        $partsRouteName = preg_split('/[\/\\\\]/', $routeName);
+        $routeName = Str::plural(Str::snake(array_reverse($partsRouteName)[0]));
+
 
         if (!file_exists(base_path($path))) {
             $routesStub = $this->getStub('routes');
+            $moduleNameLow = Str::plural(Str::snake(Str::replace(['/', '|', '\\'], '', $moduleName), '_'));
 
             $routesStub = str_replace('{{MODULE_NAME_LOW}}', $moduleNameLow, $routesStub);
             $routesStub = str_replace('{{ROUTE_NAME}}', $routeName, $routesStub);
@@ -156,7 +155,7 @@ class MakeHttpComponentCommand extends Command
     private function checkPath($name): void
     {
         $paths = preg_split('/[\/\\\\]/', $name);
-        
+
         if (!file_exists(base_path("http"))) {
             mkdir(base_path("http"));
             $this->info("✅ http folder is created.");
