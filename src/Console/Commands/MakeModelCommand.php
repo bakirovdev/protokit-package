@@ -81,12 +81,13 @@ class MakeModelCommand extends ModuleCommand
 
             file_put_contents(base_path("modules/{$name}/{$classPlural}/{$className}.php"), $classTemplate);
 
-            $this->createDatabase($name, $name);
+            
             if ($httpComponent) {
                 $this->createHttpComponents($name, null);
             }
             $this->info("✅ Modules/{$name}/{$classPlural}/{$className}.php is created!");
         }
+        $this->createDatabase($name, $name);
     }
 
     public function configureDatabase(string $moduleName)
