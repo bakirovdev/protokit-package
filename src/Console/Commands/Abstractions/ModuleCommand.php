@@ -6,5 +6,5 @@ use Illuminate\Console\Command;
 
 abstract class ModuleCommand extends Command
 {
-    private $isModule = false;
+    protected $isModule = false;
 }
