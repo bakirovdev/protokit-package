@@ -3,11 +3,12 @@
 namespace Bakirov\Protokit\Console\Commands;
 
 use Illuminate\Support\Str;
-use Illuminate\Console\Command;
 use Bakirov\Protokit\Enums\ModuleClassEnum;
+use Bakirov\Protokit\Console\Commands\Abstractions\ModuleCommand;
 
-class MakeModelCommand extends Command
+class MakeModelCommand extends ModuleCommand
 {
+    protected $isModule = true;
     use Traits\ModelHttpComponentTrait;
 
     protected $signature = 'protokit:make-module {name}  {--models=}'; 

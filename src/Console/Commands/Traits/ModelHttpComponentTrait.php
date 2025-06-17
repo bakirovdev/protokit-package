@@ -18,17 +18,20 @@ trait ModelHttpComponentTrait
                     $classPlural = Str::plural($class);
                     $httpClassName = $model . $class;
                     $classTemplate = $this->getHttpStub($class);
-                    foreach (ModuleClassEnum::values() as $modelClass){
-                        $needle = '{{'.Str::upper($modelClass). '_NAME}}';
-                        $className = $model;
-                        if ($modelClass !== ModuleClassEnum::Model->value)                        
-                            $className = $model.$modelClass;
-                        $classTemplate = str_replace($needle, "$className", $classTemplate);
+                    if ($this->isModule){
+                        foreach (ModuleClassEnum::values() as $modelClass){
+                            $needle = '{{'.Str::upper($modelClass). '_NAME}}';
+                            $className = $model;
+                            if ($modelClass !== ModuleClassEnum::Model->value)                        
+                                $className = $model.$modelClass;
+                            $classTemplate = str_replace($needle, "$className", $classTemplate);
+                        }
+                        $classTemplate = str_replace("{{HTTP_MODULE_NAME}}", "$dashName", $classTemplate);
+                        $classTemplate = str_replace("{{REQUEST_NAME}}", "{$model}Request", $classTemplate);
                     }
+
                     $classTemplate = str_replace("{{MODULE_NAME}}", "$dashName", $classTemplate);
                     $classTemplate = str_replace("{{CLASS_NAME}}", "$httpClassName", $classTemplate);
-                    $classTemplate = str_replace("{{HTTP_MODULE_NAME}}", "$dashName", $classTemplate);
-                    $classTemplate = str_replace("{{REQUEST_NAME}}", "{$model}Request", $classTemplate);
 
                     $path  = "http/{$name}/$classPlural";
                     $this->checkEachHttpFile($path);
@@ -53,18 +56,20 @@ trait ModelHttpComponentTrait
                 $httpClassName = $model . $class;
                 $classTemplate = $this->getHttpStub($class);
 
-                foreach (ModuleClassEnum::values() as $modelClass){
-                    $needle = '{{'.Str::upper($modelClass). '_NAME}}';
-                    $modelClassName = $model;
-                    if ($modelClass !== ModuleClassEnum::Model->value)                        
-                        $modelClassName = $model.$modelClass;
-                    $classTemplate = str_replace($needle, "$modelClassName", $classTemplate);
+                if ($this->isModule){
+                    foreach (ModuleClassEnum::values() as $modelClass){
+                        $needle = '{{'.Str::upper($modelClass). '_NAME}}';
+                        $modelClassName = $model;
+                        if ($modelClass !== ModuleClassEnum::Model->value)                        
+                            $modelClassName = $model.$modelClass;
+                        $classTemplate = str_replace($needle, "$modelClassName", $classTemplate);
+                    }
+                    $classTemplate = str_replace("{{HTTP_MODULE_NAME}}", "$dashName", $classTemplate);
+                    $classTemplate = str_replace("{{REQUEST_NAME}}", "{$model}Request", $classTemplate);
                 }
 
                 $classTemplate = str_replace("{{MODULE_NAME}}", "$dashName", $classTemplate);
                 $classTemplate = str_replace("{{CLASS_NAME}}", "$httpClassName", $classTemplate);
-                $classTemplate = str_replace("{{HTTP_MODULE_NAME}}", "$dashName", $classTemplate);
-                $classTemplate = str_replace("{{REQUEST_NAME}}", "{$model}Request", $classTemplate);
 
                 $path  = "http/{$name}/$classPlural";
                 $this->checkEachHttpFile($path);
@@ -102,6 +107,7 @@ trait ModelHttpComponentTrait
             $routesStub = str_replace('{{ROUTE_NAME}}', $routeName, $routesStub);
             $routesStub = str_replace('{{MODULE_NAME}}', $dashModuleName, $routesStub);
             $routesStub = str_replace('{{CLASS_NAME}}', $className, $routesStub);
+            
             file_put_contents(base_path($path), $routesStub);
         } else {
             $content = file_get_contents(base_path($path));
@@ -153,7 +159,8 @@ trait ModelHttpComponentTrait
 
     public function getHttpStub(string $stubName)
     {
-        return file_get_contents(__DIR__ . "/../../Stubs/Module/Http/$stubName.stub");
+        if ($this->isModule) return file_get_contents(__DIR__ . "/../../Stubs/Module/Http/$stubName.stub");
+        return file_get_contents(__DIR__ . "/../../Stubs/Http/$stubName.stub");
     }
 
     private function checkHttpPath($name): void
