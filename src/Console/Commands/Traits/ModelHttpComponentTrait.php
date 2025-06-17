@@ -26,6 +26,7 @@ trait ModelHttpComponentTrait
                     }
                     $classTemplate = str_replace("{{MODULE_NAME}}", "$dashName", $classTemplate);
                     $classTemplate = str_replace("{{CLASS_NAME}}", "$httpClassName", $classTemplate);
+                    $classTemplate = str_replace("{{REQUEST_NAME}}", "{$model}Request", $classTemplate);
 
                     $path  = "http/{$name}/{$class}s";
                     $this->checkEachFile($path);
@@ -44,28 +45,37 @@ trait ModelHttpComponentTrait
             }
         } else {
             foreach (HttpComponentClassEnum::values() as $class) {
-                $className = preg_split('/[\/\\\\]/', $name);
-                $className = array_reverse($className)[0];
-                $className = $className . $class;
-
+                $model = preg_split('/[\/\\\\]/', $name);
+                $model = array_reverse($model)[0];
+                $httpClassName = $model . $class;
                 $classTemplate = $this->getHttpStub($class);
+
+                foreach (ModuleClassEnum::values() as $modelClass){
+                    $needle = '{{'.Str::upper($modelClass->value). '_NAME}}';
+                    $modelClassName = $httpClassName;
+                    if ($modelClass !== ModuleClassEnum::Model->value)                        
+                        $modelClassName = $model.$class;
+                    $classTemplate = str_replace($needle, "$modelClassName", $classTemplate);
+                }
+
                 $classTemplate = str_replace("{{MODULE_NAME}}", "$dashName", $classTemplate);
-                $classTemplate = str_replace("{{CLASS_NAME}}", "$className", $classTemplate);
+                $classTemplate = str_replace("{{CLASS_NAME}}", "$httpClassName", $classTemplate);
+                $classTemplate = str_replace("{{REQUEST_NAME}}", "{$model}Request", $classTemplate);
 
                 $path  = "http/{$name}/{$class}s";
                 $this->checkEachFile($path);
 
-                if (file_exists("http/{$name}/{$class}s/{$className}.php")) {
-                    $this->info("⚠️  Http/{$name}/{$class}s/{$className}.php already exists!");
+                if (file_exists("http/{$name}/{$class}s/{$httpClassName}.php")) {
+                    $this->info("⚠️  Http/{$name}/{$class}s/{$httpClassName}.php already exists!");
                     continue;
                 }
 
-                file_put_contents(base_path("http/{$name}/{$class}s/{$className}.php"), $classTemplate);
+                file_put_contents(base_path("http/{$name}/{$class}s/{$httpClassName}.php"), $classTemplate);
 
-                $this->info("✅ Http/{$name}/{$class}s/{$className}.php is created!");
+                $this->info("✅ Http/{$name}/{$class}s/{$httpClassName}.php is created!");
 
                 if ($class === HttpComponentClassEnum::Controller->value) {
-                    $this->addRoutes($name, $className, $name);
+                    $this->addRoutes($name, $httpClassName, $name);
                 }
             }
         }
@@ -139,7 +149,7 @@ trait ModelHttpComponentTrait
 
     public function getHttpStub(string $stubName)
     {
-        return file_get_contents(__DIR__ . "/../Stubs/Module/Http/$stubName.stub");
+        return file_get_contents(__DIR__ . "/../../Stubs/Module/Http/$stubName.stub");
     }
 
     private function checkPath($name): void
