@@ -16,7 +16,7 @@ trait ModelHttpComponentTrait
             foreach ($models as $model) {
                 foreach (HttpComponentClassEnum::values() as $class) {
                     $httpClassName = $model . $class;
-                    $classTemplate = $this->getStub($class);
+                    $classTemplate = $this->getHttpStub($class);
                     foreach (ModuleClassEnum::values() as $modelClass){
                         $needle = '{{'.Str::upper($modelClass->value). '_NAME}}';
                         $className = $model;
@@ -48,7 +48,7 @@ trait ModelHttpComponentTrait
                 $className = array_reverse($className)[0];
                 $className = $className . $class;
 
-                $classTemplate = $this->getStub($class);
+                $classTemplate = $this->getHttpStub($class);
                 $classTemplate = str_replace("{{MODULE_NAME}}", "$dashName", $classTemplate);
                 $classTemplate = str_replace("{{CLASS_NAME}}", "$className", $classTemplate);
 
