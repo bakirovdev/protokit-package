@@ -1,6 +1,6 @@
 <?php
 
-namespace Http\{{MODULE_NAME}}\Controllers;
+namespace Http\{{HTTP_MODULE_NAME}}\Controllers;
 
 use Bakirov\Protokit\Base\Controller;
 use Modules\{{MODULE_NAME}}\Models\{{MODEL_NAME}};

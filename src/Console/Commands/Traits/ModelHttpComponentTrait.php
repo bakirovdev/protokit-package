@@ -10,8 +10,8 @@ trait ModelHttpComponentTrait
 {
     private function createHttpComponents(string $name, array|null $models = null): void
     {
-        $name = $this->httpComponentPath ? $this->httpComponentPath . '/' . $name : $name;
-        $dashName  = Str::replace(['/', '|'], '\\', $name);
+        $name  = Str::replace(['/', '|'], '\\', $name);
+        $dashName = $this->httpComponentPath ? $this->httpComponentPath . '/' . $name : $name;
 
         if ($models) {
             //this loop for each model
@@ -38,7 +38,7 @@ trait ModelHttpComponentTrait
                     }
 
                     // replacing dynamic names
-                    $classTemplate = str_replace("{{MODULE_NAME}}", "$dashName", $classTemplate);
+                    $classTemplate = str_replace("{{MODULE_NAME}}", "$name", $classTemplate);
                     $classTemplate = str_replace("{{CLASS_NAME}}", "$httpClassName", $classTemplate);
 
                     $path  = "http/{$name}/$classPlural";
@@ -79,7 +79,7 @@ trait ModelHttpComponentTrait
                     $classTemplate = str_replace("{{REQUEST_NAME}}", "{$model}Request", $classTemplate);
                 }
                 // replacing dynamic names
-                $classTemplate = str_replace("{{MODULE_NAME}}", "$dashName", $classTemplate);
+                $classTemplate = str_replace("{{MODULE_NAME}}", "$name", $classTemplate);
                 $classTemplate = str_replace("{{CLASS_NAME}}", "$httpClassName", $classTemplate);
 
                 $path  = "http/{$name}/$classPlural";
