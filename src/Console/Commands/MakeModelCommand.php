@@ -27,7 +27,9 @@ class MakeModelCommand extends ModuleCommand
 
         if (in_array(strtolower($askHttpComponents), ['y', 'yes', ''])) {
             $httpComponent = true;
-            $this->checkHttpPath($name);
+            $askHttpComponentPath = $this->ask("Which folder inside http you want to create. (if you don't just press enter)?");
+            $this->httpComponentPath = $askHttpComponentPath;
+            $this->checkHttpPath("$name");
         }
 
         $this->checkPath($name);

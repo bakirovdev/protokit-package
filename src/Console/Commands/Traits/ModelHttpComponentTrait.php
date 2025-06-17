@@ -10,14 +10,20 @@ trait ModelHttpComponentTrait
 {
     private function createHttpComponents(string $name, array|null $models = null): void
     {
+        $name = $this->httpComponentPath ? $this->httpComponentPath . '/' . $name : $name;
         $dashName  = Str::replace(['/', '|'], '\\', $name);
-        if ($models) {
 
+        if ($models) {
+            //this loop for each model
             foreach ($models as $model) {
+
+                //this loop for httpComponents for each model
                 foreach (HttpComponentClassEnum::values() as $class) {
                     $classPlural = Str::plural($class);
                     $httpClassName = $model . $class;
                     $classTemplate = $this->getHttpStub($class);
+
+                    //if components created from module command
                     if ($this->isModule){
                         foreach (ModuleClassEnum::values() as $modelClass){
                             $needle = '{{'.Str::upper($modelClass). '_NAME}}';
@@ -26,10 +32,12 @@ trait ModelHttpComponentTrait
                                 $modelClassName = $model.$modelClass;
                             $classTemplate = str_replace($needle, "$modelClassName", $classTemplate);
                         }
+                        // replacing dynamic names for module
                         $classTemplate = str_replace("{{HTTP_MODULE_NAME}}", "$dashName", $classTemplate);
                         $classTemplate = str_replace("{{REQUEST_NAME}}", "{$model}Request", $classTemplate);
                     }
 
+                    // replacing dynamic names
                     $classTemplate = str_replace("{{MODULE_NAME}}", "$dashName", $classTemplate);
                     $classTemplate = str_replace("{{CLASS_NAME}}", "$httpClassName", $classTemplate);
 
@@ -49,6 +57,7 @@ trait ModelHttpComponentTrait
                 }
             }
         } else {
+            //this is for creating by name only, without models
             foreach (HttpComponentClassEnum::values() as $class) {
                 $classPlural = Str::plural($class);
                 $model = preg_split('/[\/\\\\]/', $name);
@@ -56,6 +65,7 @@ trait ModelHttpComponentTrait
                 $httpClassName = $model . $class;
                 $classTemplate = $this->getHttpStub($class);
 
+                //if components created from module command
                 if ($this->isModule){
                     foreach (ModuleClassEnum::values() as $modelClass){
                         $needle = '{{'.Str::upper($modelClass). '_NAME}}';
@@ -64,10 +74,11 @@ trait ModelHttpComponentTrait
                             $modelClassName = $model.$modelClass;
                         $classTemplate = str_replace($needle, "$modelClassName", $classTemplate);
                     }
+                    // replacing dynamic names for module
                     $classTemplate = str_replace("{{HTTP_MODULE_NAME}}", "$dashName", $classTemplate);
                     $classTemplate = str_replace("{{REQUEST_NAME}}", "{$model}Request", $classTemplate);
                 }
-
+                // replacing dynamic names
                 $classTemplate = str_replace("{{MODULE_NAME}}", "$dashName", $classTemplate);
                 $classTemplate = str_replace("{{CLASS_NAME}}", "$httpClassName", $classTemplate);
 
@@ -89,9 +100,11 @@ trait ModelHttpComponentTrait
             }
         }
     }
-
+    
+    //creating routes for http component
     public function addRoutes(string $moduleName, string $className, string $routeName)
     {
+        // configure names
         $dashModuleName = Str::replace(['/', '|'], '\\', $moduleName);
         $path = "http/{$moduleName}/routes.php";
 
@@ -103,6 +116,7 @@ trait ModelHttpComponentTrait
             $routesStub = $this->getHttpStub('routes');
             $moduleNameLow = Str::plural(Str::snake(Str::replace(['/', '|', '\\'], '', $moduleName), '_'));
 
+            //replacing dynamic names
             $routesStub = str_replace('{{MODULE_NAME_LOW}}', $moduleNameLow, $routesStub);
             $routesStub = str_replace('{{ROUTE_NAME}}', $routeName, $routesStub);
             $routesStub = str_replace('{{MODULE_NAME}}', $dashModuleName, $routesStub);
@@ -110,6 +124,7 @@ trait ModelHttpComponentTrait
 
             file_put_contents(base_path($path), $routesStub);
         } else {
+            // if file exists, we will add new route by modifying existing file
             $content = file_get_contents(base_path($path));
 
             $useStatement = "use Http\\$dashModuleName\\Controllers\\$className;";
@@ -165,6 +180,7 @@ trait ModelHttpComponentTrait
 
     private function checkHttpPath($name): void
     {
+        $name = $this->httpComponentPath ? $this->httpComponentPath . '/' . $name : $name;
         $paths = preg_split('/[\/\\\\]/', $name);
 
         if (!file_exists(base_path("http"))) {
