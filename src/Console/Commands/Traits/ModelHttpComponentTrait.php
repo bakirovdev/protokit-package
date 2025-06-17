@@ -13,6 +13,7 @@ trait ModelHttpComponentTrait
         $name  = Str::replace(['/', '|'], '\\', $name);
         $dashName = $this->httpComponentPath ? $this->httpComponentPath . '\\' . $name : $name;
         $slashName = $this->httpComponentPath ? $this->httpComponentPath . '/' . $name : $name;
+        $slashName = Str::replace(['\\', '|'], '/', $slashName);
 
         if ($models) {
             //this loop for each model
