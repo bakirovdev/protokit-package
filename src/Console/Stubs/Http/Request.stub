@@ -1,6 +1,6 @@
 <?php
 
-namespace Http\{{MODULE_NAME}}\Requests;
+namespace Http\{{HTTP_MODULE_NAME}}\Requests;
 
 use Bakirov\Protokit\Base\Request\Request;
 
