@@ -18,7 +18,7 @@ trait ModelHttpComponentTrait
                     $httpClassName = $model . $class;
                     $classTemplate = $this->getHttpStub($class);
                     foreach (ModuleClassEnum::values() as $modelClass){
-                        $needle = '{{'.Str::upper($modelClass->value). '_NAME}}';
+                        $needle = '{{'.Str::upper($modelClass). '_NAME}}';
                         $className = $model;
                         if ($modelClass !== ModuleClassEnum::Model->value)                        
                             $className = $model.$class;
@@ -29,7 +29,7 @@ trait ModelHttpComponentTrait
                     $classTemplate = str_replace("{{REQUEST_NAME}}", "{$model}Request", $classTemplate);
 
                     $path  = "http/{$name}/{$class}s";
-                    $this->checkEachFile($path);
+                    $this->checkEachHttpFile($path);
 
                     if (file_exists("http/{$name}/{$class}s/{$className}.php")) {
                         $this->info("⚠️  Http/{$name}/{$class}s/{$className}.php already exists!");
@@ -51,7 +51,7 @@ trait ModelHttpComponentTrait
                 $classTemplate = $this->getHttpStub($class);
 
                 foreach (ModuleClassEnum::values() as $modelClass){
-                    $needle = '{{'.Str::upper($modelClass->value). '_NAME}}';
+                    $needle = '{{'.Str::upper($modelClass). '_NAME}}';
                     $modelClassName = $httpClassName;
                     if ($modelClass !== ModuleClassEnum::Model->value)                        
                         $modelClassName = $model.$class;
@@ -63,7 +63,7 @@ trait ModelHttpComponentTrait
                 $classTemplate = str_replace("{{REQUEST_NAME}}", "{$model}Request", $classTemplate);
 
                 $path  = "http/{$name}/{$class}s";
-                $this->checkEachFile($path);
+                $this->checkEachHttpFile($path);
 
                 if (file_exists("http/{$name}/{$class}s/{$httpClassName}.php")) {
                     $this->info("⚠️  Http/{$name}/{$class}s/{$httpClassName}.php already exists!");
@@ -152,7 +152,7 @@ trait ModelHttpComponentTrait
         return file_get_contents(__DIR__ . "/../../Stubs/Module/Http/$stubName.stub");
     }
 
-    private function checkPath($name): void
+    private function checkHttpPath($name): void
     {
         $paths = preg_split('/[\/\\\\]/', $name);
 
@@ -171,7 +171,7 @@ trait ModelHttpComponentTrait
         }
     }
 
-    private function checkEachFile(string $path)
+    private function checkEachHttpFile(string $path)
     {
         if (!file_exists(base_path("$path"))) {
             mkdir(base_path("$path"));

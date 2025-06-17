@@ -26,6 +26,7 @@ class MakeModelCommand extends Command
 
         if (in_array(strtolower($askHttpComponents), ['y', 'yes', ''])) {
             $httpComponent = true;
+            $this->checkHttpPath($name);
         }
 
         $this->checkPath($name);
