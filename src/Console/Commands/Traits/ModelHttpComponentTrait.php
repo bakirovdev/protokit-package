@@ -26,6 +26,7 @@ trait ModelHttpComponentTrait
                     }
                     $classTemplate = str_replace("{{MODULE_NAME}}", "$dashName", $classTemplate);
                     $classTemplate = str_replace("{{CLASS_NAME}}", "$httpClassName", $classTemplate);
+                    $classTemplate = str_replace("{{HTTP_MODULE_NAME}}", "{$model}Request", $classTemplate);
                     $classTemplate = str_replace("{{REQUEST_NAME}}", "{$model}Request", $classTemplate);
 
                     $path  = "http/{$name}/{$class}s";
