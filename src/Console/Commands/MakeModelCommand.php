@@ -8,23 +8,26 @@ use Bakirov\Protokit\Enums\ModuleClassEnum;
 
 class MakeModelCommand extends Command
 {
-    protected $signature = 'protokit:make-module {name}  {--models=}'; 
+    use Traits\ModelHttpComponentTrait;
+
+    protected $signature = 'protokit:make-module {name}  {--models=} {--http-component}'; 
     protected $description = 'This will create new Module by the name and create models';
     
     public function handle(): void
     {
         $name = $this->argument('name');
         $models = $this->option('models');
+        $httpComponent = $this->option('http-component');
         if ($models)
             $models = explode(',', $models);
 
         $this->checkPath($name);
-        $this->createModuleClasses($name, $models);
+        $this->createModuleClasses($name, $models, $httpComponent);
 
         $this->info("Model class '$name' created successfully.");
     }
 
-    private function createModuleClasses(string $name, array|null $models = null): void
+    private function createModuleClasses(string $name, array|null $models = null, $httpComponent = null): void
     {
         $this->configureDatabase($name);
         if ($models) {
@@ -48,6 +51,9 @@ class MakeModelCommand extends Command
 
                 $this->createDatabase($name, $model);
             }
+            if ($httpComponent) {
+                $this->createHttpComponents($name, $models);
+            }
             return;
         }
 
@@ -67,6 +73,9 @@ class MakeModelCommand extends Command
             file_put_contents(base_path("modules/{$name}/{$classPlural}/{$className}.php"), $classTemplate);
 
             $this->createDatabase($name, $name);
+            if ($httpComponent) {
+                $this->createHttpComponents($name, null);
+            }
             $this->info("✅ Modules/{$name}/{$classPlural}/{$className}.php is created!");
         }
     }

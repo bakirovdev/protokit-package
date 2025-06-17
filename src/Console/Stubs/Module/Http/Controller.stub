@@ -4,8 +4,9 @@ namespace Http\{{MODULE_NAME}}\Controllers;
 
 use Bakirov\Protokit\Base\Controller;
 use Modules\{{MODULE_NAME}}\Models\{{MODEL_NAME}};
-use Modules\{{MODULE_NAME}}\Searches\{{MODEL_NAME}};
-use Modules\{{MODULE_NAME}}\Models\{{MODEL_NAME}};
+use Modules\{{MODULE_NAME}}\Searches\{{SEARCH_NAME}};
+use Modules\{{MODULE_NAME}}\Resources\{{RESOURCE_NAME}};
+use Modules\{{MODULE_NAME}}\Requests\{{REQUEST_NAME}};
 
 class {{CLASS_NAME}} extends Controller
 {
@@ -13,11 +14,11 @@ class {{CLASS_NAME}} extends Controller
     {
         
         parent::__construct(
-            model: new User(),
-            search: New UserSearch(),
-            filter: new UserFilter(),
-            resourceClass: UserResource::class,
-            requestClass: UserRequest::class
+            model: new {{MODEL_NAME}}(),
+            search: New {{SEARCH_NAME}}(),
+            filter: null,  // You can create your own filter and use it here. 
+            resourceClass: {{RESOURCE_NAME}}::class,
+            requestClass: {{REQUEST_NAME}}::class
         );
     }
 }
