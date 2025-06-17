@@ -5,7 +5,7 @@ namespace Bakirov\Protokit\Enums;
 enum HttpComponentClassEnum: string
 {
     case Controller = 'Controller';
-    case Requests = 'Requests';
+    case Request = 'Request';
 
     public static function values(): array
     {

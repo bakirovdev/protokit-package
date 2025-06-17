@@ -1,0 +1,27 @@
+<?php
+
+namespace Http\{{HTTP_MODULE_NAME}}\Requests;
+
+use Bakirov\Protokit\Base\Request\Request;
+
+class {{CLASS_NAME}} extends Request
+{
+    protected array $filesSavePaths = [
+        //
+    ];
+
+    public function localizedRules(): array
+    {
+        return [
+            //
+        ];
+    }
+
+    public function nonLocalizedRules(): array
+    {
+        return [
+            //
+        ];
+    }
+
+}
