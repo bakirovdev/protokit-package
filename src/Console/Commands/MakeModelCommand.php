@@ -75,7 +75,7 @@ class MakeModelCommand extends Command
             $classTemplate = str_replace("{{MODULE_NAME}}", "$name", $classTemplate);
             $classTemplate = str_replace("{{CLASS_NAME}}", "$className", $classTemplate);
             
-            $path  = "modules/{$name}/{$class}s";
+            $path  = "modules/{$name}/$classPlural";
             $this->checkEachFile($path);
 
             file_put_contents(base_path("modules/{$name}/{$classPlural}/{$className}.php"), $classTemplate);

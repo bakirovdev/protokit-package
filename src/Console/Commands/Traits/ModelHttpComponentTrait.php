@@ -15,6 +15,7 @@ trait ModelHttpComponentTrait
 
             foreach ($models as $model) {
                 foreach (HttpComponentClassEnum::values() as $class) {
+                    $classPlural = Str::plural($class);
                     $httpClassName = $model . $class;
                     $classTemplate = $this->getHttpStub($class);
                     foreach (ModuleClassEnum::values() as $modelClass){
@@ -29,16 +30,16 @@ trait ModelHttpComponentTrait
                     $classTemplate = str_replace("{{HTTP_MODULE_NAME}}", "$dashName", $classTemplate);
                     $classTemplate = str_replace("{{REQUEST_NAME}}", "{$model}Request", $classTemplate);
 
-                    $path  = "http/{$name}/{$class}s";
+                    $path  = "http/{$name}/$classPlural";
                     $this->checkEachHttpFile($path);
 
-                    if (file_exists("http/{$name}/{$class}s/{$className}.php")) {
-                        $this->info("⚠️  Http/{$name}/{$class}s/{$className}.php already exists!");
+                    if (file_exists("http/{$name}/$classPlural/{$className}.php")) {
+                        $this->info("⚠️  Http/{$name}/$classPlural/{$className}.php already exists!");
                         continue;
                     }
 
-                    file_put_contents(base_path("http/{$name}/{$class}s/{$className}.php"), $classTemplate);
-                    $this->info("✅ Http/{$name}/{$class}s/{$className}.php is created!");
+                    file_put_contents(base_path("http/{$name}/$classPlural/{$className}.php"), $classTemplate);
+                    $this->info("✅ Http/{$name}/$classPlural/{$className}.php is created!");
 
                     if ($class === HttpComponentClassEnum::Controller->value)
                         $this->addRoutes($name, $className, $model);
@@ -46,6 +47,7 @@ trait ModelHttpComponentTrait
             }
         } else {
             foreach (HttpComponentClassEnum::values() as $class) {
+                $classPlural = Str::plural($class);
                 $model = preg_split('/[\/\\\\]/', $name);
                 $model = array_reverse($model)[0];
                 $httpClassName = $model . $class;
@@ -64,17 +66,17 @@ trait ModelHttpComponentTrait
                 $classTemplate = str_replace("{{HTTP_MODULE_NAME}}", "{$model}Request", $classTemplate);
                 $classTemplate = str_replace("{{REQUEST_NAME}}", "$dashName", $classTemplate);
 
-                $path  = "http/{$name}/{$class}s";
+                $path  = "http/{$name}/$classPlural";
                 $this->checkEachHttpFile($path);
 
-                if (file_exists("http/{$name}/{$class}s/{$httpClassName}.php")) {
-                    $this->info("⚠️  Http/{$name}/{$class}s/{$httpClassName}.php already exists!");
+                if (file_exists("http/{$name}/$classPlural/{$httpClassName}.php")) {
+                    $this->info("⚠️  Http/{$name}/$classPlural/{$httpClassName}.php already exists!");
                     continue;
                 }
 
-                file_put_contents(base_path("http/{$name}/{$class}s/{$httpClassName}.php"), $classTemplate);
+                file_put_contents(base_path("http/{$name}/$classPlural/{$httpClassName}.php"), $classTemplate);
 
-                $this->info("✅ Http/{$name}/{$class}s/{$httpClassName}.php is created!");
+                $this->info("✅ Http/{$name}/$classPlural/{$httpClassName}.php is created!");
 
                 if ($class === HttpComponentClassEnum::Controller->value) {
                     $this->addRoutes($name, $httpClassName, $name);
