@@ -6,7 +6,7 @@ use Bakirov\Protokit\Base\Controller;
 use Modules\{{MODULE_NAME}}\Models\{{MODEL_NAME}};
 use Modules\{{MODULE_NAME}}\Searches\{{SEARCH_NAME}};
 use Modules\{{MODULE_NAME}}\Resources\{{RESOURCE_NAME}};
-use Modules\{{MODULE_NAME}}\Requests\{{REQUEST_NAME}};
+use Http\{{HTTP_MODULE_NAME}}\Requests\{{REQUEST_NAME}};
 
 class {{CLASS_NAME}} extends Controller
 {

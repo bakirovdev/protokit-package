@@ -21,7 +21,7 @@ trait ModelHttpComponentTrait
                         $needle = '{{'.Str::upper($modelClass). '_NAME}}';
                         $className = $model;
                         if ($modelClass !== ModuleClassEnum::Model->value)                        
-                            $className = $model.$class;
+                            $className = $model.$modelClass;
                         $classTemplate = str_replace($needle, "$className", $classTemplate);
                     }
                     $classTemplate = str_replace("{{MODULE_NAME}}", "$dashName", $classTemplate);
@@ -52,15 +52,16 @@ trait ModelHttpComponentTrait
 
                 foreach (ModuleClassEnum::values() as $modelClass){
                     $needle = '{{'.Str::upper($modelClass). '_NAME}}';
-                    $modelClassName = $httpClassName;
+                    $modelClassName = $model;
                     if ($modelClass !== ModuleClassEnum::Model->value)                        
-                        $modelClassName = $model.$class;
+                        $modelClassName = $model.$modelClass;
                     $classTemplate = str_replace($needle, "$modelClassName", $classTemplate);
                 }
 
                 $classTemplate = str_replace("{{MODULE_NAME}}", "$dashName", $classTemplate);
                 $classTemplate = str_replace("{{CLASS_NAME}}", "$httpClassName", $classTemplate);
-                $classTemplate = str_replace("{{REQUEST_NAME}}", "{$model}Request", $classTemplate);
+                $classTemplate = str_replace("{{HTTP_MODULE_NAME}}", "{$model}Request", $classTemplate);
+                $classTemplate = str_replace("{{REQUEST_NAME}}", "$dashName", $classTemplate);
 
                 $path  = "http/{$name}/{$class}s";
                 $this->checkEachHttpFile($path);
