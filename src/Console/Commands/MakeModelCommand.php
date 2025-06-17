@@ -10,16 +10,23 @@ class MakeModelCommand extends Command
 {
     use Traits\ModelHttpComponentTrait;
 
-    protected $signature = 'protokit:make-module {name}  {--models=} {--http-component}'; 
+    protected $signature = 'protokit:make-module {name}  {--models=}'; 
     protected $description = 'This will create new Module by the name and create models';
     
     public function handle(): void
     {
+        $httpComponent = false;
         $name = $this->argument('name');
         $models = $this->option('models');
-        $httpComponent = $this->option('http-component');
+
         if ($models)
             $models = explode(',', $models);
+
+        $askHttpComponents = $this->ask("Do you want add HttpComponents such as Controllers, Requests, routes (Y/n)?");
+
+        if (in_array(strtolower($askHttpComponents), ['y', 'yes', ''])) {
+            $httpComponent = true;
+        }
 
         $this->checkPath($name);
         $this->createModuleClasses($name, $models, $httpComponent);
