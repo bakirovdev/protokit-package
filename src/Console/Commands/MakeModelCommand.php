@@ -104,7 +104,7 @@ class MakeModelCommand extends Command
          
         $fileName = Str::plural(Str::snake($moduleName)).'-relations';
         if (file_exists(base_path("modules/$moduleName/Database/$fileName.php"))){
-            $this->error("❗️  $moduleName-relations.php  migration is already exists");
+            $this->error("❗️  $moduleName-relations.php  relation is already exists");
         }else {
             $relationTemplate = $this->getStub('relation');
             file_put_contents(base_path("modules/$moduleName/Database/$fileName.php"), $relationTemplate);
@@ -117,7 +117,7 @@ class MakeModelCommand extends Command
 
         // create migration
         if (file_exists(base_path("modules/$moduleName/Database/Migrations/$fileName.php"))){
-            $this->error("❗️  $fileName.php  migration is already exists");
+            $this->error("❗️  $fileName.php migration is already exists");
         }else {
             $migrationTemplate = $this->getStub('migration');
             $migrationTemplate = str_replace("{{TABLE_NAME}}", "$fileName", $migrationTemplate);
@@ -126,7 +126,7 @@ class MakeModelCommand extends Command
 
         // createSeeder
         if (file_exists(base_path("modules/$moduleName/Database/Seeders/$fileName-seeder.php"))){
-            $this->error("❗️  $fileName-seeder.php  migration is already exists");
+            $this->error("❗️  $fileName-seeder.php seeder is already exists");
         }else {
             $seederTemplate = $this->getStub('seeder');
             $seederTemplate = str_replace("{{TABLE_NAME}}", "$fileName", $seederTemplate);
