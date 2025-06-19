@@ -63,10 +63,10 @@ There are
 After instalation you will have two new folders that are `modules` and `http`
   - **modules** - It will have your models such as User, Post, etc...
             The sturcuture is
-                  ```User/
+                  User/
                     ├── Database/        # Factories, seeders, migrations specific to User
                     ├── Models/          # Eloquent models (e.g., User.php)
                     ├── Searches/        # Custom query builder or filtering logic
                     ├── Resources/       # API Resources or resource collections
-                    └── Observers/       # Model observers for lifecycle events```
+                    └── Observers/       # Model observers for lifecycle events
 
