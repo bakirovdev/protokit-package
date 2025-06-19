@@ -6,6 +6,7 @@
             "Bakirov\\Protokit\\": "src/"
         }
     },
+    "license": "MIT",
     "authors": [
         {
             "name": "Umarjon Bakirov",
