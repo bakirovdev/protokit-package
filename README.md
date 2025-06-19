@@ -85,7 +85,7 @@ modules/
   ```bash
   php artisan protokit:create-module {module-name} --models={model-names}
 ```
-  -module-name: Required. This must be name of your module.
+  - module-name: Required. This must be name of your module.
   - --{module-names}. Optional . exp: User,UserProfile,UserComment (all models that belongs to User) (If you will not have moedels, module has only one model that take this name.)
 This command asks you to create `http-component` for module . It is optional.
 
@@ -108,6 +108,6 @@ http/
 ```bash
   php artisan protokit:make-http-component {name}  {--models=}
 ```
-  -name: Required. This must be name of your http-component.
+  - name: Required. This must be name of your http-component.
   - --{models}. Optional . exp: User,UserProfile,UserComment (it depends code logic) (If you will not have models)
 
