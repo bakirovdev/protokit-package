@@ -12,9 +12,9 @@
 The package for using Laravel framework easly. It has starter configurations and own dependency structure. 
 ## Key Features
 - **Halpers**: Helpers for validation, file management , locoliziation
-- **Confugured Testing**:  Classes for application tests.
-- **Http Structure **:  Structure based on SOLID princips.
-- **Model Structure **:  Structure based on SOLID princips.
-- **Configured Base Controller **:  Base controller that has default CRUD wich common for all models.
-- **Filter System **:  Filter structure for queryies, It will give convenience for Frontend.
+- **Confugured Testing**:  Classes for application tests
+- **Http Structure **:  Structure based on SOLID princips
+- **Model Structure **:  Structure based on SOLID princips
+- **Configured Base Controller **:  Base controller that has default CRUD wich common for all models
+- **Filter System **:  Filter structure for queryies, It will give convenience for Frontend
 
