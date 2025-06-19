@@ -10,7 +10,8 @@
 </div>
 
 The package for using Laravel framework easly. It has starter configurations and own dependency structure. 
-## Key Features
+  
+<h2>Key Features</h2>
 - **Halpers**: Helpers for validation, file management , locoliziation
 - **Confugured Testing**:  Classes for application tests
 - **Http Structure**:  Structure based on SOLID princips
@@ -61,7 +62,8 @@ There are
 - Testing
 
 After instalation you will have two new folders that are `modules` and `http`
-# modules 
+
+<h2>modules</h2>
 It will have your models such as User, Post, etc...
 <div align="center">
   <h5>The sturcuture is</h5>
@@ -78,7 +80,7 @@ modules/
       └── Enums/           # Enums that belongs to Models inside this modules. (e,g., GenderEnum, UserTypeEnum)
 ```
 
-# http 
+<h2>http</h2>
 It will have your http-components  such as Controllers, Rquests and API
 <div align="center">
   <h5>The sturcuture is</h5>
