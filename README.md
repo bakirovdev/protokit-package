@@ -12,6 +12,7 @@
 The package for using Laravel framework easly. It has starter configurations and own dependency structure. 
   
 <h2>Key Features</h2>
+
 - **Halpers**: Helpers for validation, file management , locoliziation
 - **Confugured Testing**:  Classes for application tests
 - **Http Structure**:  Structure based on SOLID princips
@@ -79,6 +80,14 @@ modules/
       └── Observers/       # Model observers for lifecycle events
       └── Enums/           # Enums that belongs to Models inside this modules. (e,g., GenderEnum, UserTypeEnum)
 ```
+  <h3>Commands for create module</h3>
+  
+  ```bash
+  php artisan protokit:create-module {module-name} --models={model-names}
+```
+  -module-name: Required. This must be name of your module.
+  - --{module-names}. Optional . exp: User,UserProfile,UserComment (all models that belongs to User) (If you will not have moedels, module has only one model that take this name.)
+This command asks you to create `http-component` for module . It is optional.
 
 <h2>http</h2>
 It will have your http-components  such as Controllers, Rquests and API
@@ -93,4 +102,12 @@ http/
       ├── Requests/               # Requests depend Controllers
       └── routes.php/             # api routes depend this Controllers
 ```
+
+<h3>Commands for create http-component</h3>
+  
+```bash
+  php artisan protokit:make-http-component {name}  {--models=}
+```
+  -name: Required. This must be name of your http-component.
+  - --{models}. Optional . exp: User,UserProfile,UserComment (it depends code logic) (If you will not have models)
 
