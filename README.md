@@ -6,7 +6,7 @@
   <img src="https://img.shields.io/packagist/dependency-v/bakirov/protokit/php">
   <img src="https://img.shields.io/packagist/dt/bakirov/protokit">
   <img src="https://img.shields.io/packagist/v/bakirov/protokit">
-  <img src="https://img.shields.io/packagist/dt/bakirov/protokit">
+  <img src="https://img.shields.io/packagist/l/bakirov/protokit">
 </div>
 
 The package for using Laravel framework easly. It has starter configurations and own dependency structure. 
