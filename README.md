@@ -22,6 +22,7 @@ The package for using Laravel framework easly. It has starter configurations and
   <h2>Installation</h2>
 </div>
 
+You can install package by this composer command.
 ```bash
 composer require bakirov/protokit
 ```
@@ -45,4 +46,27 @@ Last installation stap is autoload command fo composer . You need to run it like
 ```bash
 composer dump-autoload
 ```
+<div align="center">
+  <h2>Usage</h2>
+</div>
+
+Package has Base Classes to use inside Bakirov/Protokit/Base folder. You can write your application by extending those environment.
+There are
+- Helpers
+- Model
+- Request
+- Routing
+- Common Rules 
+- Search
+- Testing
+
+After instalation you will have two new folders that are `modules` and `http`
+  - **modules** - It will have your models such as User, Post, etc...
+            The sturcuture is
+                  ```User/
+                    ├── Database/        # Factories, seeders, migrations specific to User
+                    ├── Models/          # Eloquent models (e.g., User.php)
+                    ├── Searches/        # Custom query builder or filtering logic
+                    ├── Resources/       # API Resources or resource collections
+                    └── Observers/       # Model observers for lifecycle events```
 
