@@ -21,9 +21,11 @@ The package for using Laravel framework easly. It has starter configurations and
 <div align="center">
   <h2>Installation</h2>
 </div>
+
 ```bash
 composer require bakirov/protokit
 ```
+
 Next step you must publish config and action register files:
 
 ```bash
