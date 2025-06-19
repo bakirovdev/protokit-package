@@ -68,13 +68,27 @@ It will have your models such as User, Post, etc...
 </div>
 
 ```bash
-app/
-└── Domains/
-    └── User/
-        ├── Database/        # Factories, seeders, migrations specific to User
-        ├── Models/          # Eloquent models (e.g., User.php)
-        ├── Searches/        # Custom query builder or filtering logic
-        ├── Resources/       # API Resources or resource collections
-        └── Observers/       # Model observers for lifecycle events
+modules/
+  └── {{module-name}}/     # Such as User, Post , Setting or etc...
+      ├── Database/        # Seeders, migrations, relations specific to User
+      ├── Models/          # Eloquent models (e.g., User.php, UserProfile,)
+      ├── Searches/        # Filtering logic. It looks like GraphQL
+      ├── Resources/       # API Resource collections
+      └── Observers/       # Model observers for lifecycle events
+      └── Enums/           # Enums that belongs to Models inside this modules. (e,g., GenderEnum, UserTypeEnum)
+```
+
+# http 
+It will have your http-components  such as Controllers, Rquests and API
+<div align="center">
+  <h5>The sturcuture is</h5>
+</div>
+
+```bash
+http/
+  └── {{componenet-name}}/        # You can neme it like User, Post, Comment. Sometimes it depends to module.
+      ├── Controllers/            # Controllers that working for this component.
+      ├── Requests/               # Requests depend Controllers
+      └── routes.php/             # api routes depend this Controllers
 ```
 
