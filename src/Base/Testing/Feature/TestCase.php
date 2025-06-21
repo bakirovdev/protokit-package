@@ -1,6 +1,6 @@
 <?php
 
-namespace Bakirov\Protokit\Testing\Feature;
+namespace Bakirov\Protokit\Base\Testing\Feature;
 
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;

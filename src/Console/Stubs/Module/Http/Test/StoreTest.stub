@@ -6,6 +6,12 @@ use Modules\Repository\Search\RepositorySearch;
 
 class StoreTest extends _TestCase
 {
+    /**
+    *   You can set your next tests here about this method.
+    *   Feel free to add your own tests. 
+    *   The function up  here is for example. You can fill it with your or you can build your own.
+    */
+    
     public function test_success():void
     {
         $this->sendRequest(

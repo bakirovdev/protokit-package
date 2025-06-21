@@ -8,7 +8,11 @@ class _TestCase extends TestCase
 {
     /**
     *   This is parent of tests this model.
-    **/
+    *
+    *   You can set your next tests here about this method.
+    *   Feel free to add your own tests. 
+    *   The function up  here is for example. You can fill it with your or you can build your own.
+    */
 
     // public int $userId = 2;  it is for authenticate
     public string $requestUrl = '{{MODULE_NAME_LOW}}/{{ROUTE_NAME}}'; //  this is main path to use

@@ -3,11 +3,17 @@
 namespace Http\{{MODULE_NAME}}\Tests\{{MODEL_NAME}};
 
 use Bakirov\Protokit\Base\Testing\Feature\Traits\SearchFeatureTestTrait;
-use Modules\{{MODULE_NAME}}\Search\{{SEARCH_CLASS}};
+use Modules\{{MODULE_NAME}}\Searches\{{SEARCH_CLASS}};
 
 class IndexTest extends _TestCase
 {
     use SearchFeatureTestTrait;
+
+    /**
+    *   You can set your next tests here about this method.
+    *   Feel free to add your own tests. 
+    *   The function up  here is for example. You can fill it with your or you can build your own.
+    */
 
     public string $searchClass = {{SEARCH_CLASS}}::class;
 
@@ -15,14 +21,9 @@ class IndexTest extends _TestCase
     {
         $this->sendRequestWithFilters([
             'name' => 'test',
-            'company_id' => 1,
-            'is_main' => false,
+            'status' => 'success',
+            'user_id' => 1,
         ]);
     }
 
-    /**
-    *   You can set your next tests here about this method.
-    *   Feel free to add your own tests. 
-    *   The function up  here is for example. You can fill it with your or you can build your own.
-    */
 }

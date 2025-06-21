@@ -1,6 +1,6 @@
 <?php
 
-namespace Bakirov\Protokit\Testing\Feature\Traits;
+namespace Bakirov\Protokit\Base\Testing\Feature\Traits;
 
 use Bakirov\Protokit\Base\Search;
 
