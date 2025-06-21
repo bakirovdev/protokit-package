@@ -2,8 +2,6 @@
 
 namespace Http\{{MODULE_NAME}}\Tests\{{MODEL_NAME}};
 
-use Modules\Repository\Search\RepositorySearch;
-
 class DeleteTest extends _TestCase
 {
     /**

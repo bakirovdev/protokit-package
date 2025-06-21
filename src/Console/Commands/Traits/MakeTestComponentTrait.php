@@ -31,7 +31,7 @@ trait MakeTestComponentTrait
                     $fileContent = str_replace('{{ROUTE_NAME}}', $routeName, $fileContent);
                     $fileContent = str_replace('{{SEARCH_CLASS}}', "{$model}Search", $fileContent);
 
-                    $path  = "http/{$slashName}/Tests/$model";
+                    $path  = "{$slashName}/Tests/$model";
                     $this->checkEachTestFile($path);
 
                     if (file_exists("http/{$slashName}/Tests/$model/$fileName.php")) {
@@ -39,7 +39,7 @@ trait MakeTestComponentTrait
                         continue;
                     }
 
-                    file_put_contents(base_path("$path/{$fileName}.php"), $fileContent);
+                    file_put_contents(base_path("http/$path/{$fileName}.php"), $fileContent);
                     $this->info("✅ Http/{$slashName}/Tests/$model/$fileName.php is created!");
                 }
             }
@@ -82,7 +82,6 @@ trait MakeTestComponentTrait
 
     private function checkEachTestFile(string $path)
     {
-        $path = $this->httpComponentPath ? $this->httpComponentPath . '/' . $path : $path;
         $paths = preg_split('/[\/\\\\]/', $path);
 
         $collectedPath = '';
