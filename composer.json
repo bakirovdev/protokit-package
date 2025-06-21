@@ -16,7 +16,7 @@
     "require": {
         "php": ">=8.2",
         "illuminate/console": "^11.15",
-        "laravel/framework": "^11 || ^12"
+        "laravel/framework": "^12"
     },
     "extra": {
         "laravel": {
