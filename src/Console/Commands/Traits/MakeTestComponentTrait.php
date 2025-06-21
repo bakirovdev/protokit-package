@@ -24,7 +24,7 @@ trait MakeTestComponentTrait
                 foreach ($files as $file) {
                     $fileContent = file_get_contents($file);
                     $fileName = basename($file, '.stub');
-                                        
+
                     $fileContent = str_replace('{{MODULE_NAME}}', $dashName, $fileContent);
                     $fileContent = str_replace('{{MODEL_NAME}}', $model, $fileContent);
                     $fileContent = str_replace('{{MODULE_NAME_LOW}}', $moduleNameLow, $fileContent);
@@ -41,7 +41,7 @@ trait MakeTestComponentTrait
 
                     file_put_contents(base_path("$path/{$fileName}.php"), $fileContent);
                     $this->info("✅ Http/{$slashName}/Tests/$model/$fileName.php is created!");
-                }                
+                }
             }
 
         } else {
@@ -52,15 +52,15 @@ trait MakeTestComponentTrait
             $files = $this->getTestsStubs();
             foreach ($files as $file) {
                 $fileContent = file_get_contents($file);
-                $fileName = basename($file, '.stub');                
-                
+                $fileName = basename($file, '.stub');
+
                 $fileContent = str_replace('{{MODULE_NAME}}', $name, $fileContent);
                 $fileContent = str_replace('{{MODEL_NAME}}', $name, $fileContent);
                 $fileContent = str_replace('{{MODULE_NAME_LOW}}', $moduleNameLow, $fileContent);
                 $fileContent = str_replace('{{ROUTE_NAME}}', $routeName, $fileContent);
                 $fileContent = str_replace('{{SEARCH_CLASS}}', "{$name}Search", $fileContent);
 
-                $path  = "http/{$slashName}/Tests/$name";
+                $path  = "{$slashName}/Tests/$name";
                 $this->checkEachTestFile($path);
 
                 if (file_exists("http/{$slashName}/Tests/$name/$fileName.php")) {
@@ -68,37 +68,30 @@ trait MakeTestComponentTrait
                     continue;
                 }
 
-                file_put_contents(base_path("$path/{$fileName}.php"), $fileContent);
+                file_put_contents(base_path("http/$path/{$fileName}.php"), $fileContent);
                 $this->info("✅ Http/{$slashName}/Tests/$name/$fileName.php is created!");
-            }      
+            }
         }
     }
-    
+
     //creating routes for http component
     public function getTestsStubs()
     {
         return glob(__DIR__."/../../Stubs/Module/Http/Test/*.stub");
     }
 
-    private function checkTestPath($name): void
+    private function checkEachTestFile(string $path)
     {
-        $name = $this->httpComponentPath ? $this->httpComponentPath . '/' . $name : $name;
-        $paths = preg_split('/[\/\\\\]/', $name);
+        $path = $this->httpComponentPath ? $this->httpComponentPath . '/' . $path : $path;
+        $paths = preg_split('/[\/\\\\]/', $path);
 
         $collectedPath = '';
         foreach ($paths as $path) {
+
             $collectedPath .= ucfirst($path) . '/';
             if (!file_exists(base_path("http/$collectedPath"))) {
                 mkdir(base_path("http/$collectedPath"));
-                $this->info("✅ $collectedPath folder is created.");
             }
-        }
-    }
-
-    private function checkEachTestFile(string $path)
-    {
-        if (!file_exists(base_path("$path"))) {
-            mkdir(base_path("$path"));
         }
     }
 }
