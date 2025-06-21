@@ -8,7 +8,6 @@ trait MakeTestComponentTrait
 {
     private function createTestComponents(string $name, array|null $models = null): void
     {
-        $this->getTestsStub();
         $name  = Str::replace(['/', '|'], '\\', $name);
         $dashName = $this->httpComponentPath ? $this->httpComponentPath . '\\' . $name : $name;
         $slashName = $this->httpComponentPath ? $this->httpComponentPath . '/' . $name : $name;
