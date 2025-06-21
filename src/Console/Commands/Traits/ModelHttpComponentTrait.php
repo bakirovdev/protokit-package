@@ -10,6 +10,8 @@ trait ModelHttpComponentTrait
 {
     private function createHttpComponents(string $name, array|null $models = null): void
     {
+        $this->createTestComponents($name, $models);
+        
         $name  = Str::replace(['/', '|'], '\\', $name);
         $dashName = $this->httpComponentPath ? $this->httpComponentPath . '\\' . $name : $name;
         $slashName = $this->httpComponentPath ? $this->httpComponentPath . '/' . $name : $name;
