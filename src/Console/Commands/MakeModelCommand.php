@@ -33,8 +33,6 @@ class MakeModelCommand extends ModuleCommand
             $this->checkHttpPath($name);
         }
 
-        $this->createHttpComponents($name, $models);
-
         $this->checkPath($name);
         $this->createModuleClasses($name, $models, $httpComponent);
 
@@ -67,6 +65,7 @@ class MakeModelCommand extends ModuleCommand
             }
             if ($httpComponent) {
                 $this->createHttpComponents($name, $models);
+                $this->createTestComponents($name, $models);
             }
             return;
         }
@@ -89,6 +88,7 @@ class MakeModelCommand extends ModuleCommand
             
             if ($httpComponent) {
                 $this->createHttpComponents($name, null);
+                $this->createTestComponents($name, null);
             }
             $this->info("✅ Modules/{$name}/{$classPlural}/{$className}.php is created!");
         }
