@@ -101,7 +101,7 @@ trait ModelHttpComponentTrait
             }
         }
     }
-
+    
     //creating routes for http component
     public function addRoutes(string $moduleName, string $className, string $routeName)
     {

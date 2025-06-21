@@ -1,0 +1,15 @@
+<?php
+
+namespace Http\{{MODULE_NAME}}\Tests\{{MODEL_NAME}};
+
+use Bakirov\Protokit\Base\Testing\Feature\TestCase;
+
+class _TestCase extends TestCase
+{
+    /**
+    *   This is parent of tests this model.
+    **/
+
+    // public int $userId = 2;  it is for authenticate
+    public string $requestUrl = '{{MODULE_NAME_LOW}}/{{ROUTE_NAME}}'; //  this is main path to use
+}
