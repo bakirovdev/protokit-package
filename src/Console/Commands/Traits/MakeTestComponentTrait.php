@@ -53,23 +53,25 @@ trait MakeTestComponentTrait
             foreach ($files as $file) {
                 $fileContent = file_get_contents($file);
                 $fileName = basename($file, '.stub');
+                $partsName = preg_split('/[\/\\\\]/', $name);
+                $lastName = ucfirst(array_reverse($partsName)[0]);
 
-                $fileContent = str_replace('{{MODULE_NAME}}', $name, $fileContent);
-                $fileContent = str_replace('{{MODEL_NAME}}', $name, $fileContent);
+                $fileContent = str_replace('{{MODULE_NAME}}', $lastName, $fileContent);
+                $fileContent = str_replace('{{MODEL_NAME}}', $lastName, $fileContent);
                 $fileContent = str_replace('{{MODULE_NAME_LOW}}', $moduleNameLow, $fileContent);
                 $fileContent = str_replace('{{ROUTE_NAME}}', $routeName, $fileContent);
-                $fileContent = str_replace('{{SEARCH_CLASS}}', "{$name}Search", $fileContent);
+                $fileContent = str_replace('{{SEARCH_CLASS}}', "{$lastName}Search", $fileContent);
 
-                $path  = "{$slashName}/Tests/$name";
+                $path  = "{$slashName}/Tests/$lastName";
                 $this->checkEachTestFile($path);
 
-                if (file_exists("http/{$slashName}/Tests/$name/$fileName.php")) {
-                    $this->info("⚠️  Http/{$slashName}/Tests/$name/$fileName.php already exists!");
+                if (file_exists("http/{$slashName}/Tests/$lastName/$fileName.php")) {
+                    $this->info("⚠️  Http/{$slashName}/Tests/$lastName/$fileName.php already exists!");
                     continue;
                 }
 
                 file_put_contents(base_path("http/$path/{$fileName}.php"), $fileContent);
-                $this->info("✅ Http/{$slashName}/Tests/$name/$fileName.php is created!");
+                $this->info("✅ Http/{$slashName}/Tests/$lastName/$fileName.php is created!");
             }
         }
     }
