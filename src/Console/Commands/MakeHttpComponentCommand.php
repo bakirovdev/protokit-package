@@ -7,6 +7,7 @@ use Bakirov\Protokit\Console\Commands\Abstractions\ModuleCommand;
 class MakeHttpComponentCommand extends ModuleCommand
 {
     use Traits\ModelHttpComponentTrait;
+    use Traits\MakeTestComponentTrait;
 
     protected $signature = 'protokit:make-http-component {name}  {--models=}';
     protected $description = 'This will create new Http Component by the name and create models. Inside component there are controllers, requests, and tests.';

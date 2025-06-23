@@ -1,0 +1,35 @@
+<?php
+
+namespace Http\{{MODULE_NAME}}\Tests\{{MODEL_NAME}};
+
+class DeleteTest extends _TestCase
+{
+    /**
+    *   You can set your next tests here about this method.
+    *   Feel free to add your own tests. 
+    *   The function up  here is for example. You can fill it with your or you can build your own.
+    */
+
+    public function test_delete_success():void
+    {
+        $this->sendRequest(
+            method: 'DELETE',       //method
+            path: '2',              // id of update item
+            query: []               // this is for additional query filtering
+        );
+    }
+
+    public function test_restore_success():void
+    {
+        // Use this method for SoftDelete used models.
+
+        // User::query()->find('2')->delete();
+        // $this->sendRequest(
+        //    method: 'DELETE',
+        //    path: '2/restore',
+        //    query: [
+        //        'company_id' => 1
+        //    ]
+        //);
+    }
+}

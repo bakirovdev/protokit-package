@@ -10,6 +10,7 @@ class MakeModelCommand extends ModuleCommand
 {
     protected $isModule = true;
     use Traits\ModelHttpComponentTrait;
+    use Traits\MakeTestComponentTrait;
 
     protected $signature = 'protokit:make-module {name}  {--models=}'; 
     protected $description = 'This will create new Module by the name and create models';
@@ -29,7 +30,7 @@ class MakeModelCommand extends ModuleCommand
             $httpComponent = true;
             $askHttpComponentPath = $this->ask("Which folder inside http you want to create. (if you don't just press enter)?");
             $this->httpComponentPath = $askHttpComponentPath;
-            $this->checkHttpPath("$name");
+            $this->checkHttpPath($name);
         }
 
         $this->checkPath($name);

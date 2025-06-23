@@ -10,6 +10,8 @@ trait ModelHttpComponentTrait
 {
     private function createHttpComponents(string $name, array|null $models = null): void
     {
+        $this->createTestComponents($name, $models);
+        
         $name  = Str::replace(['/', '|'], '\\', $name);
         $dashName = $this->httpComponentPath ? $this->httpComponentPath . '\\' . $name : $name;
         $slashName = $this->httpComponentPath ? $this->httpComponentPath . '/' . $name : $name;
@@ -101,7 +103,7 @@ trait ModelHttpComponentTrait
             }
         }
     }
-
+    
     //creating routes for http component
     public function addRoutes(string $moduleName, string $className, string $routeName)
     {
